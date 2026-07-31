@@ -1,0 +1,175 @@
+---
+title: PulseRN
+description: See every signal. Debug the whole story with PulseRN, the open-source desktop debugger for React Native.
+template: splash
+hero:
+  tagline: The open-source desktop debugger that brings your React Native app’s entire story into one timeline.
+  image:
+    file: ../../assets/pulse-rn-app-icon-light.png
+  actions:
+    - text: Get started
+      link: /getting-started/
+      icon: right-arrow
+    - text: Download PulseRN
+      link: /downloads/
+      icon: download
+    - text: View on GitHub
+      link: https://github.com/maahibhama/PulseRN
+      icon: external
+      variant: minimal
+---
+
+import ProductJsonLd from "../../components/ProductJsonLd.astro";
+import ReleaseDownloads from "../../components/ReleaseDownloads.astro";
+import SdkCodeWindow from "../../components/SdkCodeWindow.astro";
+
+<ProductJsonLd />
+
+<div class="status-row" aria-label="Project status">
+  <span>
+    <i aria-hidden="true"></i> Actively developed
+  </span>
+  <span>MIT licensed</span>
+  <span>macOS · Windows · Linux</span>
+</div>
+
+<section class="showcase" aria-labelledby="showcase-heading">
+  <div class="section-intro">
+    <p class="eyebrow">One debugging workspace</p>
+    <h2 id="showcase-heading">See the event. Find the cause.</h2>
+    <p>
+      Stop jumping between consoles, inspectors, and scattered logs. PulseRN
+      correlates the signals around a bug so you can understand what
+      happened—and what happened just before it.
+    </p>
+  </div>
+  <figure class="product-shot">
+    <img
+      src="/assets/pulsern-timeline.png"
+      alt="PulseRN desktop debugger showing events in a unified chronological timeline"
+      width="1228"
+      height="768"
+      loading="eager"
+    />
+    <figcaption>
+      Follow interactions, navigation, requests, state, and errors in sequence.
+    </figcaption>
+  </figure>
+</section>
+
+<section class="capabilities" aria-labelledby="capabilities-heading">
+  <div class="section-intro compact">
+    <p class="eyebrow">A clearer debugging loop</p>
+    <h2 id="capabilities-heading">The context you need, together.</h2>
+  </div>
+  <div class="capability-grid">
+    <article>
+      <span class="feature-number">01</span>
+      <h3>Unified timeline</h3>
+      <p>
+        Trace logs, network calls, navigation, Redux actions, render activity,
+        and errors in order.
+      </p>
+      <a href="/features/">
+        Explore the timeline <span aria-hidden="true">→</span>
+      </a>
+    </article>
+    <article>
+      <span class="feature-number">02</span>
+      <h3>Native JavaScript debugger</h3>
+      <p>
+        Debug Hermes with original TypeScript sources, breakpoints, stepping,
+        scopes, watches, and evaluation.
+      </p>
+      <a href="/features/#javascript-debugger">
+        Open debugger docs <span aria-hidden="true">→</span>
+      </a>
+    </article>
+    <article>
+      <span class="feature-number">03</span>
+      <h3>Built for local development</h3>
+      <p>
+        Connect your app over your local network and control exactly what
+        telemetry it sends.
+      </p>
+      <a href="/guides/#protect-sensitive-data">
+        Review privacy controls <span aria-hidden="true">→</span>
+      </a>
+    </article>
+  </div>
+</section>
+
+<section class="workflow" aria-labelledby="workflow-heading">
+  <div class="workflow-copy">
+    <p class="eyebrow">From install to insight</p>
+    <h2 id="workflow-heading">Connect in minutes.</h2>
+    <ol>
+      <li>
+        <strong>Install PulseRN</strong>
+        <span>Choose the desktop build for your platform.</span>
+      </li>
+      <li>
+        <strong>Add the SDK</strong>
+        <span>Install one package and initialize it in development.</span>
+      </li>
+      <li>
+        <strong>Run your app</strong>
+        <span>
+          PulseRN discovers the session and starts building the timeline.
+        </span>
+      </li>
+    </ol>
+    <a class="text-cta" href="/getting-started/">
+      Follow the quickstart <span aria-hidden="true">→</span>
+    </a>
+  </div>
+  <SdkCodeWindow />
+</section>
+
+<section class="app-preview" aria-labelledby="preview-heading">
+  <div class="phone-frame">
+    <img
+      src="/assets/pulsern-react-native-example.png"
+      alt="PulseRN React Native example app connection screen"
+      width="456"
+      height="972"
+      loading="lazy"
+    />
+  </div>
+  <div>
+    <p class="eyebrow">Expo and bare React Native</p>
+    <h2 id="preview-heading">Small integration. Rich visibility.</h2>
+    <p>
+      Start with the signals you need and expand as you debug. The SDK supports
+      console capture, network inspection, navigation, Redux, performance
+      measurements, storage, and handled errors.
+    </p>
+    <ul class="signal-list">
+      <li>Safe, bounded serialization</li>
+      <li>Configurable redaction</li>
+      <li>Original console behavior preserved</li>
+      <li>Automatic reconnection</li>
+    </ul>
+    <a class="primary-cta" href="/sdk/">
+      Integrate the SDK <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<ReleaseDownloads />
+
+<section class="contribute-band" aria-labelledby="contribute-heading">
+  <p class="eyebrow">Open source, built in public</p>
+  <h2 id="contribute-heading">Help shape the debugger you want to use.</h2>
+  <p>
+    Read the roadmap, report a rough edge, or contribute a focused improvement.
+  </p>
+  <div>
+    <a class="primary-cta" href="https://github.com/maahibhama/PulseRN">
+      Contribute on GitHub <span aria-hidden="true">↗</span>
+    </a>
+    <a class="secondary-cta" href="/roadmap/">
+      View roadmap
+    </a>
+  </div>
+</section>

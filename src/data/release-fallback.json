@@ -1,0 +1,9 @@
+{
+  "source": "fallback",
+  "version": "Preview",
+  "name": "PulseRN preview builds",
+  "publishedAt": null,
+  "url": "https://github.com/maahibhama/PulseRN/releases",
+  "notes": "PulseRN is currently distributed as preview builds. Open GitHub Releases to choose the newest build for your platform.",
+  "assets": []
+}

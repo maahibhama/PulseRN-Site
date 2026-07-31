@@ -1,0 +1,90 @@
+---
+import { formatBytes, getLatestRelease } from "../lib/releases.mjs";
+
+const release = await getLatestRelease();
+const groups = [
+  { name: "macOS", icon: "⌘", keys: ["macArm64", "macX64"] },
+  { name: "Windows", icon: "⊞", keys: ["windowsX64", "windowsArm64"] },
+  { name: "Linux", icon: "⌁", keys: ["linuxAppImage", "linuxDeb"] },
+];
+---
+
+<section class="release-panel" aria-labelledby="release-heading">
+  <header class="release-heading">
+    <div>
+      <p class="eyebrow">Latest desktop release</p>
+      <h2 id="release-heading">
+        {
+          release.version === "Preview"
+            ? release.name
+            : `PulseRN ${release.version}`
+        }
+      </h2>
+    </div>
+    {
+      release.publishedAt && (
+        <time datetime={release.publishedAt}>
+          {new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(
+            new Date(release.publishedAt),
+          )}
+        </time>
+      )
+    }
+  </header>
+
+  {
+    release.source === "fallback" && (
+      <aside class="release-notice" role="status">
+        Showing the checked-in release fallback.{" "}
+        {"reason" in release ? release.reason : ""}
+      </aside>
+    )
+  }
+
+  {
+    release.assets.length ? (
+      <div class="download-grid">
+        {groups.map((group) => (
+          <article class="download-card">
+            <span class="platform-icon" aria-hidden="true">
+              {group.icon}
+            </span>
+            <h3>{group.name}</h3>
+            <div class="download-actions">
+              {release.assets
+                .filter((asset) => group.keys.includes(asset.key))
+                .map((asset) => (
+                  <a class="download-link" href={asset.url}>
+                    <span>{asset.label.replace(`${group.name} · `, "")}</span>
+                    <small>{formatBytes(asset.size)}</small>
+                  </a>
+                ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="preview-download">
+        <p>
+          Choose the newest preview build for macOS, Windows, or Linux on
+          GitHub.
+        </p>
+        <a class="primary-cta" href={release.url}>
+          Browse GitHub Releases <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    )
+  }
+
+  <footer class="release-footer">
+    <a href={release.url}>Release notes</a>
+    {
+      release.assets.find((asset) => asset.key === "checksums") && (
+        <a href={release.assets.find((asset) => asset.key === "checksums").url}>
+          Verify checksums
+        </a>
+      )
+    }
+    <a href="https://github.com/maahibhama/PulseRN/releases">All releases</a>
+  </footer>
+</section>

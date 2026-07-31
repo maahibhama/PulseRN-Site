@@ -1,0 +1,44 @@
+---
+title: Download PulseRN
+description: Download the latest PulseRN desktop debugger for macOS, Windows, and Linux.
+---
+
+import ReleaseDownloads from "../../../components/ReleaseDownloads.astro";
+
+PulseRN desktop builds are published through GitHub Releases. Pick the build that matches your
+computer, then follow the [installation guide](/installation/) to get connected.
+
+<ReleaseDownloads />
+
+> PulseRN preview releases are currently unsigned. macOS Gatekeeper and Windows SmartScreen may
+> show a warning. Signed and notarized packages are planned before the stable release.
+
+## Install with Homebrew
+
+```sh
+brew tap maahibhama/pulsern https://github.com/maahibhama/PulseRN
+brew install --cask --no-quarantine pulsern
+```
+
+## Verify a download
+
+Download `SHA256SUMS.txt` alongside the installer, then run the command for your platform:
+
+```sh
+# macOS or Linux
+shasum -a 256 -c SHA256SUMS.txt
+```
+
+```powershell
+# Windows PowerShell
+Get-FileHash .\PulseRN-*-setup.exe -Algorithm SHA256
+```
+
+Compare the Windows result with the matching line in `SHA256SUMS.txt`. If a checksum differs, do
+not open the file; delete it and download it again from the official release.
+
+## Need help?
+
+See [installation troubleshooting](/installation/#troubleshooting) or
+[open an issue](https://github.com/maahibhama/PulseRN/issues/new/choose) with your operating
+system, PulseRN version, and the exact error.

@@ -1,0 +1,100 @@
+// @ts-check
+import { defineConfig } from "astro/config";
+import starlight from "@astrojs/starlight";
+
+export default defineConfig({
+  site: "https://maahibhama.github.io",
+  trailingSlash: "always",
+  integrations: [
+    starlight({
+      title: "PulseRN",
+      description:
+        "The open-source React Native debugging desktop app and SDK.",
+      favicon: "/favicon.svg",
+      customCss: ["./src/styles/custom.css"],
+      head: [
+        { tag: "meta", attrs: { property: "og:type", content: "website" } },
+        {
+          tag: "meta",
+          attrs: {
+            property: "og:title",
+            content: "PulseRN — Debug the whole story.",
+          },
+        },
+        {
+          tag: "meta",
+          attrs: {
+            property: "og:description",
+            content:
+              "The open-source desktop debugger for React Native, with every signal in one timeline.",
+          },
+        },
+        {
+          tag: "meta",
+          attrs: {
+            property: "og:image",
+            content: "https://maahibhama.github.io/og.png",
+          },
+        },
+        {
+          tag: "meta",
+          attrs: { property: "og:image:width", content: "1200" },
+        },
+        {
+          tag: "meta",
+          attrs: { property: "og:image:height", content: "630" },
+        },
+        {
+          tag: "meta",
+          attrs: { name: "twitter:card", content: "summary_large_image" },
+        },
+      ],
+      logo: {
+        src: "./src/assets/pulsern-logo.svg",
+        replacesTitle: true,
+      },
+      editLink: {
+        baseUrl:
+          "https://github.com/maahibhama/maahibhama.github.io/edit/main/",
+      },
+      lastUpdated: true,
+      social: [
+        {
+          icon: "github",
+          label: "PulseRN on GitHub",
+          href: "https://github.com/maahibhama/PulseRN",
+        },
+      ],
+      sidebar: [
+        {
+          label: "Start Here",
+          items: [
+            { label: "Getting Started", slug: "getting-started" },
+            { label: "Installation", slug: "installation" },
+            { label: "SDK Setup", slug: "sdk" },
+            { label: "Downloads", slug: "downloads" },
+          ],
+        },
+        {
+          label: "Use PulseRN",
+          items: [
+            { label: "Features", slug: "features" },
+            { label: "Guides", slug: "guides" },
+            { label: "Reference", slug: "reference" },
+          ],
+        },
+        {
+          label: "Project",
+          items: [
+            { label: "Architecture", slug: "architecture" },
+            { label: "Development", slug: "development" },
+            { label: "Contributing", slug: "contributing" },
+            { label: "Releasing", slug: "releasing" },
+            { label: "Security", slug: "security" },
+            { label: "Roadmap", slug: "roadmap" },
+          ],
+        },
+      ],
+    }),
+  ],
+});
