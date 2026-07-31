@@ -50,7 +50,9 @@ export default defineConfig({
         },
       ],
       logo: {
-        src: "./src/assets/pulsern-logo.svg",
+        dark: "./src/assets/pulsern-logo-dark.svg",
+        light: "./src/assets/pulsern-logo.svg",
+        alt: "",
         replacesTitle: true,
       },
       editLink: {

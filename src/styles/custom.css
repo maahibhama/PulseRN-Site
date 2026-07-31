@@ -43,6 +43,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 body {
   font-feature-settings:
@@ -479,8 +480,21 @@ body {
   [data-has-hero] .hero {
     padding-top: 3rem;
   }
+  [data-has-hero] .hero::before {
+    inset-inline: 10%;
+    width: auto;
+  }
   [data-has-hero] .hero h1 {
     font-size: clamp(3rem, 15vw, 5rem);
+  }
+  [data-has-hero] .hero .actions {
+    display: grid;
+    width: min(100%, 19rem);
+    grid-template-columns: 1fr;
+  }
+  [data-has-hero] .hero .actions > a {
+    width: 100%;
+    justify-content: center;
   }
   .capability-grid,
   .workflow,
