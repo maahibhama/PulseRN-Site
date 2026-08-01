@@ -68,10 +68,14 @@ The checksum file covers every artifact, so missing-file messages are expected w
 
 ## Expected result
 
-PulseRN opens, listens locally on port `9090`, and is ready for an SDK connection. Continue with [Getting started](/PulseRN-Site/getting-started/).
+PulseRN opens, listens locally on port `9090`, and is ready for an SDK connection. The first-run
+checklist verifies the SDK, debugger port, device, Metro/Hermes, and first event. Continue with
+[Getting started](/PulseRN-Site/getting-started/).
 
 ## Troubleshooting
 
 - Security warnings are expected for unsigned preview builds.
 - If port `9090` is occupied, stop the conflicting process; the SDK and desktop port must match.
-- See the [security model](/PulseRN-Site/security/) before attempting a connection from a physical device.
+- Physical devices are supported through [authenticated LAN pairing](/PulseRN-Site/connections/).
+- Automatic updates are available only in eligible signed packaged builds; unsigned previews use
+  direct downloads.

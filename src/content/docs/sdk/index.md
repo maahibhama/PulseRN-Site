@@ -31,6 +31,19 @@ if (__DEV__) {
     captureResponseBodies: true,
     maxNetworkBodyBytes: 102_400,
     enableErrors: true,
+    enablePerformance: true,
+    environment: "development",
+    categories: {
+      console: true,
+      network: true,
+      performance: true,
+    },
+    sampling: {
+      performance: 1,
+    },
+    onDroppedEvent(notice) {
+      updateDeveloperDropIndicator(notice);
+    },
     redaction: {
       fields: ["password", "otp", "token"],
       headers: ["authorization", "cookie"],
@@ -42,9 +55,58 @@ if (__DEV__) {
 
 Offline events remain in a bounded queue; the oldest event is dropped when it fills. Inspect counts with `client.getStats()`.
 
+Use `validatePulseRNConfig(config)` when configuration must be checked before a client is created.
+`client.getDiagnosticSummary()` reports transport health, and
+`client.subscribeConnectionState(listener)` drives a developer-only connection indicator.
+
+SDK diagnostics distinguish queue overflow, oversized payloads, category-disabled events, sampling,
+console rate limits, network capture budgets, and native socket-buffer pressure.
+
 ## Expo and bare React Native
 
 The SDK supports Expo development builds and React Native Community CLI applications. Expo Go works for JavaScript-only capture, but cannot load custom native modules such as MMKV/Nitro. Rebuild the development app whenever native dependencies change.
+
+## Connect a physical device
+
+Enable authenticated LAN access in PulseRN, create a pairing code, and configure the computer's LAN
+address:
+
+```ts
+ReactNativeDevTool.configure({
+  host: "192.168.1.20",
+  port: 9090,
+  appName: "MyApp",
+  pairingCode: "ABCD-EFGH",
+  secure: false,
+  onReconnectToken(token) {
+    saveDevelopmentReconnectToken(token);
+  },
+}).connect();
+```
+
+Use the returned `reconnectToken` on later launches. Set `secure: true` only after configuring TLS
+in the desktop app and installing trust for the certificate authority on the device. See
+[Connections and secure pairing](/PulseRN-Site/connections/).
+
+## Preserve device and session identity
+
+Use an already-installed storage library to keep device identity stable through application
+launches:
+
+```ts
+const identity = await getOrCreatePulseRNIdentity(AsyncStorage, {
+  lifecycleId: developmentLifecycleId,
+});
+
+ReactNativeDevTool.configure({
+  appName: "MyApp",
+  ...identity,
+}).connect();
+```
+
+Keep the lifecycle ID stable through Fast Refresh. Change it on a cold launch, logout, or another
+application-defined session boundary. `configureWithIdentity` combines identity resolution and
+client configuration; `getOrCreatePulseRNDeviceId` is available when only the device must persist.
 
 ## Add integrations
 
@@ -91,8 +153,13 @@ client.connect();
 
 MMKV v3/v4 uses `createMMKVStorageProvider`. MMKV v4 requires `react-native-mmkv` and `react-native-nitro-modules`.
 
+Provider capabilities determine whether values are readable, writable, removable, snapshot-safe,
+or undoable. The desktop validates types and asks for confirmation before mutations.
+
 ## Expected result
 
 The desktop app identifies the configured application and enables inspectors for each active integration.
 
-For focused examples, see [Features](/PulseRN-Site/features/) and [Common workflows](/PulseRN-Site/guides/). For exported symbols and limits, see [SDK reference](/PulseRN-Site/reference/).
+For focused examples, see [Features](/PulseRN-Site/features/) and
+[Common workflows](/PulseRN-Site/guides/). For exported symbols and limits, see
+[SDK reference](/PulseRN-Site/reference/).

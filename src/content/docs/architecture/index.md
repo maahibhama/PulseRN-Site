@@ -18,32 +18,46 @@ PulseRN is a pnpm/Turborepo monorepo. Its versioned wire contract is independent
 
 ```text
 React Native SDK
-  → batch + redact + sequence
-  → ws://127.0.0.1:9090
+  → validate + sample + redact + batch + sequence
+  → ws://127.0.0.1:9090 or authenticated ws(s):// LAN
   → parse JSON as unknown
   → Zod validation + negotiation
   → SQLite transaction + session projection
-  → validated Electron IPC snapshot
+  → cursor-paginated validated Electron IPC
   → Zustand renderer store
-  → timeline and details
+  → bounded virtualized timeline and inspectors
 ```
 
 Electron main is the trusted boundary. The renderer is sandboxed with context isolation and no Node integration. Preload exposes narrow, typed operations rather than raw IPC.
 
 ## Debugger and settings
 
-The Hermes debugger is a separate Electron-main connection through Metro’s loopback Chrome DevTools Protocol proxy. Main validates discovery and messages, resolves source maps, and sends only narrow debugger commands and snapshots across preload.
+The Hermes debugger is a separate Electron-main connection through Metro’s loopback Chrome DevTools
+Protocol proxy. Main validates discovery and messages, resolves source maps, negotiates optional
+capabilities, restores debugger state after reloads, and sends only narrow commands and snapshots
+across preload. React component inspection reads development-only Fiber roots through this same
+connection and remains read-only.
 
 Preferences cross validated IPC and are atomically stored with user-only permissions under Electron’s platform `userData` directory.
 
 ## Storage and persistence
 
-SQLite uses WAL mode and batched transactions. The renderer currently consumes a small in-memory projection; pagination and virtualization are planned for higher-volume sessions.
+SQLite uses WAL mode, ordered migrations, batched transactions, and configurable count/age
+retention. The renderer consumes a bounded 2,000-event live projection; database filters, cursor
+pagination, and virtualization serve retained history. Bookmarks and annotations are stored
+separately from immutable captured events.
 
 Storage commands travel from renderer IPC through Electron main to one negotiated SDK connection. The SDK dispatches them only to registered providers and returns bounded results.
 
 ## Session model
 
-Configuration creates a device ID and session ID. A connection ID represents one WebSocket lifetime. Reconnection preserves the configured device/session identity and receives a new connection ID.
+Configuration creates a device ID and session ID. A connection ID represents one WebSocket lifetime.
+Reconnection can preserve configured device/session identity and receives a new connection ID.
+Optional SDK helpers persist identity through an application-owned storage adapter.
 
-Read the [protocol reference](/PulseRN-Site/reference/) for event limits and [security](/PulseRN-Site/security/) for the trust model.
+Session archives are gzip-compressed, versioned, checksummed, bounded, and imported transactionally.
+The MCP bridge uses an authenticated local socket or named pipe and applies a configured access mode
+before dispatching narrow database, diagnostic, debugger, or storage operations.
+
+Read the [protocol reference](/PulseRN-Site/reference/) for event limits and
+[security](/PulseRN-Site/security/) for the trust model.

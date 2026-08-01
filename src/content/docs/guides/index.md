@@ -74,4 +74,30 @@ Structured values are recursively redacted before transmission. Avoid embedding 
 2. Confirm the SDK is configured only in a development build.
 3. Use the correct simulator host from [Getting started](/PulseRN-Site/getting-started/).
 4. Check `client.getStats()` for queueing or dropped events.
-5. Remember that physical-device LAN connections are intentionally unavailable.
+5. Check `client.getDiagnosticSummary()` and **Connections** for socket backpressure or reconnect failures.
+6. For a physical device, enable LAN access and create a valid pairing code.
+
+## Preserve a development device identity
+
+```ts
+const identity = await getOrCreatePulseRNIdentity(AsyncStorage, {
+  lifecycleId: developmentLifecycleId,
+});
+
+ReactNativeDevTool.configure({
+  appName: "MyApp",
+  ...identity,
+}).connect();
+```
+
+Reuse the lifecycle ID during Fast Refresh and rotate it when the development run genuinely changes.
+
+## Diagnose a session automatically
+
+Open the MCP panel, enable read-only access, and connect a trusted AI client. Ask it to diagnose the
+newest session or a selected session. PulseRN returns deterministic findings with confidence,
+relations, source context, evidence, and scan-completeness warnings.
+
+Use a diagnostic snapshot when you want to preserve the evidence and paused debugger context for
+later review. See [Automatic diagnostics](/PulseRN-Site/diagnostics/) and
+[MCP debugger](/PulseRN-Site/mcp/).

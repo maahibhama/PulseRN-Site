@@ -8,8 +8,8 @@ PulseRN combines a desktop debugger with the `@pulse-rn/sdk` package. The SDK ca
 ## Prerequisites
 
 - A React Native development build
-- Node.js 20.19 or newer when developing PulseRN itself
 - PulseRN desktop running on the same computer as Metro
+- Node.js 20.19 or newer only when developing PulseRN itself
 
 Expo Go cannot load native MMKV integrations; use an Expo development build when your app uses MMKV.
 
@@ -37,6 +37,7 @@ if (__DEV__) {
     enableConsole: true,
     enableNetwork: true,
     enableErrors: true,
+    enablePerformance: true,
     redaction: { fields: ["password", "token"] },
   }).connect();
 }
@@ -54,13 +55,19 @@ Use `127.0.0.1` for the iOS Simulator and `10.0.2.2` for the Android Emulator. F
 adb reverse tcp:9090 tcp:9090
 ```
 
+For a physical device over Wi-Fi, enable authenticated LAN access in desktop Settings and follow
+[Connections and secure pairing](/PulseRN-Site/connections/). LAN connections require a one-time
+pairing code or a previously issued reconnect token.
+
 ## Troubleshooting
 
 - **No device appears:** confirm PulseRN is open, the port is `9090`, and the app is a development build.
 - **Android cannot connect:** use `10.0.2.2` for an emulator or configure `adb reverse` for a USB device.
-- **Physical device cannot connect:** LAN binding is intentionally unavailable until authenticated remote connections are implemented.
+- **Physical device cannot connect:** enable LAN access, use the computer's LAN IP, and create a fresh pairing code.
 - **Duplicate network events:** avoid enabling an Axios interceptor for requests already captured by the global fetch/XHR instrumentation.
 
 ## Next steps
 
-Continue with the complete [SDK setup](/PulseRN-Site/sdk/), explore the [inspectors](/PulseRN-Site/features/), or review [privacy and redaction](/PulseRN-Site/guides/#protect-sensitive-data).
+Continue with the complete [SDK setup](/PulseRN-Site/sdk/), explore the
+[inspectors](/PulseRN-Site/features/), or learn how to use the
+[timeline](/PulseRN-Site/timeline/).

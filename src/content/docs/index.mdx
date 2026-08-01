@@ -71,8 +71,8 @@ import SdkCodeWindow from "../../components/SdkCodeWindow.astro";
       <span class="feature-number">01</span>
       <h3>Unified timeline</h3>
       <p>
-        Trace logs, network calls, navigation, Redux actions, render activity,
-        and errors in order.
+        Trace logs, network calls, navigation, Redux actions, performance,
+        storage, and errors—with saved views, bookmarks, and correlations.
       </p>
       <a href="/PulseRN-Site/features/">
         Explore the timeline <span aria-hidden="true">→</span>
@@ -83,9 +83,9 @@ import SdkCodeWindow from "../../components/SdkCodeWindow.astro";
       <h3>Native JavaScript debugger</h3>
       <p>
         Debug Hermes with original TypeScript sources, breakpoints, stepping,
-        scopes, watches, and evaluation.
+        scopes, evaluation, React components, and render profiling.
       </p>
-      <a href="/PulseRN-Site/features/#javascript-debugger">
+      <a href="/PulseRN-Site/debugger/">
         Open debugger docs <span aria-hidden="true">→</span>
       </a>
     </article>
@@ -93,11 +93,44 @@ import SdkCodeWindow from "../../components/SdkCodeWindow.astro";
       <span class="feature-number">03</span>
       <h3>Built for local development</h3>
       <p>
-        Connect your app over your local network and control exactly what
-        telemetry it sends.
+        Use loopback or pair a physical device securely. Capture stays bounded,
+        configurable, and under your control.
       </p>
-      <a href="/PulseRN-Site/guides/#protect-sensitive-data">
-        Review privacy controls <span aria-hidden="true">→</span>
+      <a href="/PulseRN-Site/connections/">
+        Connect a device <span aria-hidden="true">→</span>
+      </a>
+    </article>
+    <article>
+      <span class="feature-number">04</span>
+      <h3>Evidence-backed diagnostics</h3>
+      <p>
+        Turn errors, failed requests, state changes, navigation, performance,
+        and transport health into deterministic findings.
+      </p>
+      <a href="/PulseRN-Site/diagnostics/">
+        Explore diagnostics <span aria-hidden="true">→</span>
+      </a>
+    </article>
+    <article>
+      <span class="feature-number">05</span>
+      <h3>AI-ready debugging</h3>
+      <p>
+        Connect Codex, Claude, Cursor, or another MCP client with read-only,
+        debugger, or full local access.
+      </p>
+      <a href="/PulseRN-Site/mcp/">
+        Set up MCP <span aria-hidden="true">→</span>
+      </a>
+    </article>
+    <article>
+      <span class="feature-number">06</span>
+      <h3>Portable sessions</h3>
+      <p>
+        Retain large histories locally, annotate important events, and move
+        checksummed sessions between computers.
+      </p>
+      <a href="/PulseRN-Site/session-archives/">
+        Work with archives <span aria-hidden="true">→</span>
       </a>
     </article>
   </div>
@@ -146,13 +179,15 @@ import SdkCodeWindow from "../../components/SdkCodeWindow.astro";
     <p>
       Start with the signals you need and expand as you debug. The SDK supports
       console capture, network inspection, navigation, Redux, performance
-      measurements, storage, and handled errors.
+      measurements, storage, errors, connection health, category sampling, and
+      persistent development identity.
     </p>
     <ul class="signal-list">
       <li>Safe, bounded serialization</li>
       <li>Configurable redaction</li>
       <li>Original console behavior preserved</li>
       <li>Automatic reconnection</li>
+      <li>Typed sampling and dropped-event diagnostics</li>
     </ul>
     <a class="primary-cta" href="/PulseRN-Site/sdk/">
       Integrate the SDK <span aria-hidden="true">→</span>

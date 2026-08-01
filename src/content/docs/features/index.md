@@ -1,51 +1,179 @@
 ---
 title: Inspectors and features
-description: Understand the PulseRN timeline, inspectors, storage tools, and Hermes debugger.
+description: Explore PulseRN's timeline, inspectors, diagnostics, debugger, connections, and local developer tools.
 ---
 
-PulseRN correlates debugging signals in one chronological timeline. The latest 2,000 events are retained in the renderer’s in-memory projection in the current phase.
+PulseRN correlates React Native development signals in one chronological workspace. Live views stay
+bounded while cursor-paginated inspectors load retained history from SQLite.
+
+## Unified timeline
+
+The timeline combines every event category with database-backed filters, saved views, bookmarks,
+annotations, parent/correlation links, keyboard navigation, and **Follow Latest**. Clearing the
+visible projection does not delete stored history; permanent deletion is a separate confirmed
+operation.
+
+Read [Timeline and sessions](/PulseRN-Site/timeline/) for session identity, retention, and archive
+workflows.
 
 ## Console
 
-Captures `log`, `info`, `warn`, `error`, and `debug` while preserving the original console calls. Filter, search, pause, clear, expand payloads, copy values, and inspect source locations and stacks.
+PulseRN intercepts `log`, `info`, `warn`, `error`, and `debug` while preserving the original console
+calls.
+
+The Console inspector provides:
+
+- consecutive repeat collapsing with session boundaries and timestamp ranges;
+- level and source presets;
+- multiline message and stack search;
+- lazy, bounded structured values;
+- source grouping, source links, and stack inspection;
+- redaction and truncation indicators;
+- configurable 250–2,000 record display windows;
+- console-specific rate-limit and transport-drop diagnostics.
+
+Capture rate, object depth, property count, and string length are configurable. Calling
+`disconnect()` restores the original console methods.
 
 ## Network
 
-Inspects fetch and XMLHttpRequest, with optional Axios interception. Filter by status or method, search URLs, highlight failures, and inspect headers, request/response bodies, timings, and errors. Binary bodies are excluded and text bodies are bounded.
+Global fetch and XMLHttpRequest instrumentation records request lifecycle events without consuming
+the response stream. An optional Axios interceptor supports custom adapters.
+
+The Network inspector includes:
+
+- in-flight progress, completion, failure, and redirect chains;
+- initiators, correlation IDs, and an approximate waterfall;
+- status, method, URL, header, query, and body search;
+- lazy request and response body views;
+- sanitized copy-as-cURL and HAR export;
+- per-body, per-request, and per-session capture budgets.
+
+Binary bodies are excluded. Text and JSON bodies are bounded and redacted before transport.
+Fine-grained DNS, connection, or transfer phases are shown only when the runtime actually provides
+them.
 
 ## Redux
 
-The Redux/Redux Toolkit middleware records sanitized actions, optional previous and next state, path-based diffs, and reducer duration. Multiple `storeId` values remain independently filterable. State replay and time travel are not implemented.
+The Redux/Redux Toolkit middleware observes dispatch without mutating application state. It supports:
+
+- multiple independently filterable stores;
+- bounded action, previous-state, and next-state capture;
+- lazy structured trees and searchable path-based diffs;
+- changed-path summaries and reducer duration;
+- state-size warnings and circular/oversized-state handling;
+- per-store categories and action allow/deny patterns;
+- optional route, request, error, performance, and parent-flow correlation.
+
+State replay, action dispatch, and time travel are intentionally not implemented.
 
 ## Navigation
 
-React Navigation tracking records ready, state, focus, and blur events, resolves nested routes, redacts parameters, and measures time on the previous route. A manual API supports Expo Router and custom navigation systems.
+React Navigation, Expo Router, and manual tracking are normalized into a common history. PulseRN
+records complete route paths, lifecycle, previous/current routes, time on screen, parameter changes,
+and nested navigator ownership.
+
+The inspector shows:
+
+- forward, back, and reset action groups;
+- route and screen-duration history;
+- parameter diffs with redaction;
+- a flat ownership tree using stable navigator IDs;
+- integration metadata and tracking-quality warnings;
+- links to related request, Redux, performance, console, and error events.
+
+Duplicate navigator IDs, missing route keys, incomplete tracking, and inconsistent ancestry produce
+explicit warnings.
 
 ## Performance
 
-PulseRN estimates JavaScript FPS, event-loop lag and stalls, startup/screen milestones, custom measures, and available heap metrics. These JavaScript-derived values are not native UI-thread, CPU, or memory profiling.
+PulseRN captures JavaScript-derived FPS, event-loop lag and stalls, startup and screen milestones,
+custom marks/measures, and heap usage when the runtime exposes it.
+
+The Performance inspector adds:
+
+- bounded virtualized time-series views and selectable ranges;
+- configurable JS FPS, stall, slow-screen, network-latency, and memory-growth thresholds;
+- matching-session baselines when compatible history is loaded;
+- sampling interval, lost-sample, and capture-rate visibility;
+- correlated slow-operation context.
+
+Values are labeled with their JavaScript/runtime provenance. PulseRN does not substitute synthetic
+numbers for unavailable native CPU, UI-thread, GPU, or native-memory metrics.
 
 ## Storage
 
-Registered AsyncStorage and MMKV providers support discovery, search, read, refresh, update, and delete. Updates and deletes require explicit confirmation. Redacted JSON cannot be edited, and MMKV binary values appear as read-only size markers.
+Registered AsyncStorage, MMKV, and custom providers expose their capabilities before use. The
+Storage inspector supports:
+
+- 100-key cursor pagination and search;
+- lazy, typed value loading;
+- provider-aware update and delete validation;
+- read-only persisted snapshots and comparisons;
+- confirmed mutations and an opaque one-use, same-session undo;
+- local mutation audit metadata;
+- explicit export of selected safe values.
+
+Redacted, binary, sensitive, missing, or unavailable values cannot be snapshotted or exported.
+Redacted JSON cannot be edited. Storage audit events never contain stored values.
 
 ## Errors
 
-Captures uncaught JavaScript errors, unhandled rejections, React error boundaries, network failures, SDK errors, and manually reported failures. Events can include the active screen and up to 20 preceding sanitized timeline summaries.
+PulseRN captures uncaught JavaScript errors, unhandled rejections, React error boundaries, handled
+application failures, network failures, SDK errors, and debugger/connection/desktop failures.
 
-## JavaScript debugger
+The Errors inspector provides:
 
-The Sources debugger attaches to one Hermes development runtime through Metro. React Native 0.76 or newer is required.
+- stable fingerprints and grouped occurrences;
+- first/last seen and affected-version tracking;
+- cross-version regression state;
+- parsed JavaScript and React component frames;
+- application, SDK, debugger, connection, and desktop ownership classification;
+- route, request, Redux, console, and performance context;
+- re-redacted Markdown and JSON issue reports.
 
-1. Run Metro and the development build on the same computer as PulseRN.
-2. Set the Metro port in **Settings → JavaScript debugger** if it is not `8081`.
-3. Open **Debugger**, refresh targets, and select the Hermes runtime.
-4. Close React Native DevTools if Metro rejects the connection.
+Issue reports are generated locally and are never uploaded automatically.
 
-Use `F8` to resume/pause, `F10` to step over, `F11` to step in, and `Shift+F11` to step out. PulseRN supports original TypeScript sources, conditional breakpoints, call frames, scopes, watches, evaluation, and exception pausing.
+## JavaScript and React debugger
 
-Production builds, JavaScriptCore, native-code debugging, simultaneous targets, source editing, and logpoints are not supported.
+The Hermes debugger supports original sources, source quick-open, dependency blackboxing,
+breakpoints, stepping, lazy scopes, watches, inline/hover values, and a live evaluation console.
 
-## Troubleshooting
+The React workbench adds a read-only component tree, props/state/hooks/styles/accessibility
+inspection, changed-value markers, owner navigation, render timing, optional on-device highlighting,
+element picking, and bounded JavaScript render profiling.
 
-If events are missing, verify the relevant SDK option is enabled and the integration registered before `connect()`. For debugger failures, confirm Metro is loopback-accessible and no other debugger owns the runtime.
+See the complete [JavaScript debugger guide](/PulseRN-Site/debugger/).
+
+## Automatic diagnostics
+
+PulseRN can deterministically identify application errors, network failures, preceding Redux or
+navigation activity, performance anomalies, and transport degradation. Findings contain confidence,
+explicit relations, evidence, source context when available, and completeness warnings.
+
+See [Automatic diagnostics](/PulseRN-Site/diagnostics/).
+
+## MCP debugger
+
+The bundled local MCP server connects Codex, Claude, Cursor, and other compatible clients to
+PulseRN. Configurable read-only, debugger, and full modes control whether a client can only inspect
+history, control Hermes, evaluate JavaScript, or mutate storage.
+
+See [MCP debugger](/PulseRN-Site/mcp/).
+
+## Connections, archives, settings, and updates
+
+PulseRN also includes:
+
+- live transport-health diagnostics and connected-device history;
+- opt-in physical-device LAN access with one-time pairing and revocable reconnect credentials;
+- optional user-provided TLS;
+- compressed, checksummed, duplicate-safe session import/export;
+- system/light/dark themes, density, ordering, motion, retention, capture, privacy, debugger, and
+  connection preferences;
+- first-run SDK/device/Metro/Hermes/event checks;
+- stable/beta update channels with explicit download and confirmed install in eligible signed builds.
+
+Continue with [Connections and pairing](/PulseRN-Site/connections/),
+[Session archives](/PulseRN-Site/session-archives/), or
+[Troubleshooting](/PulseRN-Site/troubleshooting/).

@@ -8,10 +8,14 @@ description: Public SDK entry points, event contracts, connection behavior, and 
 Import from `@pulse-rn/sdk`:
 
 - `ReactNativeDevTool` and `createPulseRNClient` configure and control a client.
+- `validatePulseRNConfig` checks a configuration without creating a connection.
+- `getOrCreatePulseRNIdentity` and `getOrCreatePulseRNDeviceId` persist stable development identity
+  through an application-owned storage adapter.
 - `createDevToolMiddleware` and `diffStates` support Redux inspection.
-- `createNavigationTracker` and `getActiveRoute` support navigation instrumentation.
+- `createNavigationTracker`, `getActiveRoute`, and `getActiveRoutePath` support navigation instrumentation.
 - `createAsyncStorageProvider` and `createMMKVStorageProvider` register storage.
-- `DevToolClient`, `PerformanceMonitor`, and the exported configuration/event types support advanced integrations.
+- `installAxiosInterceptor`, `installErrorInterceptor`, `serializeConsoleValue`, `DevToolClient`,
+  `PerformanceMonitor`, and exported configuration/event types support advanced integrations.
 
 `ReactNativeDevTool.configure(config)` returns a client. Call `connect()` after registering any storage providers and `disconnect()` during teardown when appropriate. Production connections remain disabled unless `allowInProduction` is explicitly enabled.
 
@@ -35,15 +39,22 @@ Every event includes an ID, protocol version, session/device/app IDs, timestamp,
 
 Storage uses a separate validated request/response channel: `storage-command` and matching `storage-result`.
 
+Additive protocol capabilities include network lifecycle events, transport health, secure pairing
+credentials, storage pagination/mutation metadata, deterministic diagnoses, diagnostic snapshots,
+source search/context, and MCP access modes.
+
 ## Limits
 
-| Boundary              |        Limit |
-| --------------------- | -----------: |
-| WebSocket frame       |        2 MiB |
-| Event batch           |   500 events |
-| Default event payload |      256 KiB |
-| Default offline queue | 5,000 events |
-| Handshake timeout     |    5 seconds |
+| Boundary                  |        Limit |
+| ------------------------- | -----------: |
+| WebSocket frame           |        2 MiB |
+| Event batch               |   500 events |
+| Default event payload     |      256 KiB |
+| Default offline queue     | 5,000 events |
+| Handshake timeout         |    5 seconds |
+| Live renderer window      | 2,000 events |
+| Archive compressed size   |      100 MiB |
+| Archive decompressed size |      512 MiB |
 
 Invalid JSON and schema-invalid data are logged and discarded by Electron main; they never enter the renderer.
 
@@ -53,5 +64,9 @@ Invalid JSON and schema-invalid data are logged and discarded by Electron main; 
 - The Hermes Sources debugger requires React Native 0.76 or newer.
 - The SDK event connection defaults to port `9090`; Metro debugging defaults to loopback port `8081`.
 - MMKV v4 requires Nitro modules and therefore a native development build.
+- Physical devices can use authenticated LAN pairing; TLS is optional and independently configured.
+- The MCP bridge supports `read-only`, `debugger`, and `full` access modes.
 
-See [SDK setup](/PulseRN-Site/sdk/) for integration examples and [Architecture](/PulseRN-Site/architecture/) for boundary ownership.
+See [SDK setup](/PulseRN-Site/sdk/) for integration examples,
+[Compatibility](/PulseRN-Site/compatibility/) for runtime support, and
+[Architecture](/PulseRN-Site/architecture/) for boundary ownership.
