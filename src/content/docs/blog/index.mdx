@@ -1,0 +1,50 @@
+---
+title: PulseRN blog
+description: Practical essays about React Native debugging, Hermes, safe instrumentation, and building local-first developer tools.
+editUrl: false
+lastUpdated: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+# Debugging the whole story
+
+Practical essays for React Native developers who want to understand failures in
+context—not just collect more logs. These articles are published here first and
+prepared as portable Markdown for syndication.
+
+![PulseRN showing React Native events in one chronological timeline](https://maahibhama.github.io/PulseRN-Site/assets/pulsern-timeline.png)
+
+<CardGrid>
+  <LinkCard
+    title="React Native Debugging Needs a Timeline, Not More Tabs"
+    description="Why isolated tools hide causality, and how chronological context changes the debugging loop."
+    href="/PulseRN-Site/blog/react-native-debugging-needs-a-timeline/"
+  />
+  <LinkCard
+    title="How to Debug a Failed React Native Request as a Complete Story"
+    description="A repeatable workflow for tracing a failure from user intent to application response."
+    href="/PulseRN-Site/blog/debug-failed-react-native-request/"
+  />
+  <LinkCard
+    title="Debugging Hermes and TypeScript Without Losing Application Context"
+    description="Use breakpoints and source maps without disconnecting the paused line from the events around it."
+    href="/PulseRN-Site/blog/debugging-hermes-and-typescript/"
+  />
+  <LinkCard
+    title="Safe Debug Instrumentation for React Native Apps"
+    description="Development guards, redaction, bounded payloads, and the limits every team should document."
+    href="/PulseRN-Site/blog/safe-react-native-debug-instrumentation/"
+  />
+  <LinkCard
+    title="What I Learned Building a Local-First React Native Debugger"
+    description="Lessons from designing trust boundaries, persistence, validation, and session identity."
+    href="/PulseRN-Site/blog/building-a-local-first-react-native-debugger/"
+  />
+</CardGrid>
+
+## About these articles
+
+The source for every article is plain Markdown with self-contained links and
+images. That keeps the website canonical while making each post easy to review
+and share on DEV Community, Medium, Hashnode, or another publication.

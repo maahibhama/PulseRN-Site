@@ -104,6 +104,32 @@ export default defineConfig({
             { label: "Roadmap", slug: "roadmap" },
           ],
         },
+        {
+          label: "Blog",
+          items: [
+            { label: "All articles", slug: "blog" },
+            {
+              label: "Debugging needs a timeline",
+              slug: "blog/react-native-debugging-needs-a-timeline",
+            },
+            {
+              label: "Debug a failed request",
+              slug: "blog/debug-failed-react-native-request",
+            },
+            {
+              label: "Hermes and TypeScript",
+              slug: "blog/debugging-hermes-and-typescript",
+            },
+            {
+              label: "Safe debug instrumentation",
+              slug: "blog/safe-react-native-debug-instrumentation",
+            },
+            {
+              label: "Building a local-first debugger",
+              slug: "blog/building-a-local-first-react-native-debugger",
+            },
+          ],
+        },
       ],
     }),
   ],
