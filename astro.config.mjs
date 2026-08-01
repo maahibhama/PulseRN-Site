@@ -128,6 +128,10 @@ export default defineConfig({
               label: "Building a local-first debugger",
               slug: "blog/building-a-local-first-react-native-debugger",
             },
+            {
+              label: "MCP for React Native debugging",
+              slug: "blog/mcp-for-react-native-debugging",
+            },
           ],
         },
       ],
