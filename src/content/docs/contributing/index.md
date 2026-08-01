@@ -8,7 +8,7 @@ Contributions are welcome. Discuss substantial features in an issue before imple
 ## Workflow
 
 1. Fork [PulseRN](https://github.com/maahibhama/PulseRN) and create a focused branch.
-2. Follow [Local development](/development/) to install and run the project.
+2. Follow [Local development](/PulseRN-Site/development/) to install and run the project.
 3. Add tests for behavioral changes.
 4. Run `pnpm typecheck`, `pnpm test`, `pnpm build`, and `pnpm lint`.
 5. Open a pull request limited to one concern.
@@ -17,7 +17,7 @@ Contributions are welcome. Discuss substantial features in an issue before imple
 
 Use strict TypeScript, explicit types, small modules, and validated runtime boundaries. Preserve renderer sandboxing. Avoid `any`, `eval`, and APIs that expose Node primitives to renderer code.
 
-Never commit captured application data, credentials, device identifiers, or `.rndebug` files. Review the [security policy](/security/) when changing transport, persistence, IPC, or redaction.
+Never commit captured application data, credentials, device identifiers, or `.rndebug` files. Review the [security policy](/PulseRN-Site/security/) when changing transport, persistence, IPC, or redaction.
 
 ## Documentation checklist
 

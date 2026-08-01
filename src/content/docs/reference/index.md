@@ -54,4 +54,4 @@ Invalid JSON and schema-invalid data are logged and discarded by Electron main; 
 - The SDK event connection defaults to port `9090`; Metro debugging defaults to loopback port `8081`.
 - MMKV v4 requires Nitro modules and therefore a native development build.
 
-See [SDK setup](/sdk/) for integration examples and [Architecture](/architecture/) for boundary ownership.
+See [SDK setup](/PulseRN-Site/sdk/) for integration examples and [Architecture](/PulseRN-Site/architecture/) for boundary ownership.

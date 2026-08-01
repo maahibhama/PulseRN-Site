@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maahibhama.github.io/sitemap-index.xml
+Sitemap: https://maahibhama.github.io/PulseRN-Site/sitemap-index.xml

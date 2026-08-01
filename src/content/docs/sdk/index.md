@@ -95,4 +95,4 @@ MMKV v3/v4 uses `createMMKVStorageProvider`. MMKV v4 requires `react-native-mmkv
 
 The desktop app identifies the configured application and enables inspectors for each active integration.
 
-For focused examples, see [Features](/features/) and [Common workflows](/guides/). For exported symbols and limits, see [SDK reference](/reference/).
+For focused examples, see [Features](/PulseRN-Site/features/) and [Common workflows](/PulseRN-Site/guides/). For exported symbols and limits, see [SDK reference](/PulseRN-Site/reference/).

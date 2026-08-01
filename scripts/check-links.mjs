@@ -2,6 +2,7 @@ import { readFile, readdir } from "node:fs/promises";
 import { extname, join, relative, resolve } from "node:path";
 
 const root = resolve("dist");
+const siteBase = "/PulseRN-Site";
 const htmlFiles = [];
 
 async function walk(directory) {
@@ -17,11 +18,11 @@ await walk(root);
 const knownPaths = new Set(
   htmlFiles.flatMap((file) => {
     const path = `/${relative(root, file).replaceAll("\\", "/")}`;
-    if (path === "/index.html") return ["/"];
+    if (path === "/index.html") return [`${siteBase}/`];
     return [
-      path,
-      path.replace(/index\.html$/, ""),
-      path.replace(/\.html$/, "/"),
+      `${siteBase}${path}`,
+      `${siteBase}${path.replace(/index\.html$/, "")}`,
+      `${siteBase}${path.replace(/\.html$/, "/")}`,
     ];
   }),
 );
@@ -34,12 +35,17 @@ for (const file of htmlFiles) {
     if (/^(?:https?:|mailto:|tel:|data:|javascript:)/.test(target)) continue;
     const path = new URL(
       target,
-      `https://maahibhama.github.io/${relative(root, file)}`,
+      `https://maahibhama.github.io${siteBase}/${relative(root, file)}`,
     ).pathname;
-    if (path.startsWith("/_astro/")) continue;
+    if (!path.startsWith(siteBase)) {
+      failures.push(`${relative(root, file)} -> ${target}`);
+      continue;
+    }
     if (knownPaths.has(path)) continue;
+    const localPath = path.slice(siteBase.length);
+    if (localPath.startsWith("/_astro/")) continue;
     try {
-      await readFile(join(root, path));
+      await readFile(join(root, localPath));
     } catch {
       failures.push(`${relative(root, file)} -> ${target}`);
     }

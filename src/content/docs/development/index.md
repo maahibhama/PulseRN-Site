@@ -56,4 +56,4 @@ pnpm lint
 
 The desktop database lives in Electron’s platform `userData` directory, not the repository. Electron may print an experimental warning for its bundled `node:sqlite`; database access is isolated behind `EventDatabase`.
 
-See [Contributing](/contributing/) before opening a pull request and [Releasing](/releasing/) for packaging.
+See [Contributing](/PulseRN-Site/contributing/) before opening a pull request and [Releasing](/PulseRN-Site/releasing/) for packaging.

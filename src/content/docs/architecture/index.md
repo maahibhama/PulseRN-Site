@@ -46,4 +46,4 @@ Storage commands travel from renderer IPC through Electron main to one negotiate
 
 Configuration creates a device ID and session ID. A connection ID represents one WebSocket lifetime. Reconnection preserves the configured device/session identity and receives a new connection ID.
 
-Read the [protocol reference](/reference/) for event limits and [security](/security/) for the trust model.
+Read the [protocol reference](/PulseRN-Site/reference/) for event limits and [security](/PulseRN-Site/security/) for the trust model.

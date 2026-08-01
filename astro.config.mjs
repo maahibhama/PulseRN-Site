@@ -4,6 +4,7 @@ import starlight from "@astrojs/starlight";
 
 export default defineConfig({
   site: "https://maahibhama.github.io",
+  base: "/PulseRN-Site",
   trailingSlash: "always",
   integrations: [
     starlight({
@@ -33,7 +34,7 @@ export default defineConfig({
           tag: "meta",
           attrs: {
             property: "og:image",
-            content: "https://maahibhama.github.io/og.png",
+            content: "https://maahibhama.github.io/PulseRN-Site/og.png",
           },
         },
         {
@@ -56,8 +57,7 @@ export default defineConfig({
         replacesTitle: true,
       },
       editLink: {
-        baseUrl:
-          "https://github.com/maahibhama/maahibhama.github.io/edit/main/",
+        baseUrl: "https://github.com/maahibhama/PulseRN-Site/edit/main/",
       },
       lastUpdated: true,
       social: [

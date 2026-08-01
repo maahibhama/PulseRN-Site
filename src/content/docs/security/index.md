@@ -26,4 +26,4 @@ Free-form error messages and stack strings cannot be safely field-redacted. Appl
 
 Do not bind the server to a LAN interface until authentication and origin controls are implemented. This is why physical-device connections are not currently supported by the default server.
 
-Review [privacy and redaction guidance](/guides/#protect-sensitive-data) when configuring an application and [Architecture](/architecture/) when changing trust boundaries.
+Review [privacy and redaction guidance](/PulseRN-Site/guides/#protect-sensitive-data) when configuring an application and [Architecture](/PulseRN-Site/architecture/) when changing trust boundaries.

@@ -33,7 +33,7 @@ and verifies internal links.
 3. In the GitHub repository, open **Settings → Pages** and choose
    **GitHub Actions** as the source.
 4. The included `Deploy GitHub Pages` workflow validates and deploys the site
-   to `https://maahibhama.github.io/`.
+   to `https://maahibhama.github.io/PulseRN-Site/`.
 
 The workflow uses GitHub's built-in token only during the build to obtain the
 latest stable PulseRN release. No token is shipped to the browser. If release

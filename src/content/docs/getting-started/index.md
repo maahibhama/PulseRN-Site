@@ -15,7 +15,7 @@ Expo Go cannot load native MMKV integrations; use an Expo development build when
 
 ## 1. Install the desktop app
 
-Choose a package from [desktop installation](/installation/) or [GitHub Releases](https://github.com/maahibhama/PulseRN/releases), then open PulseRN. Preview builds are unsigned, so macOS Gatekeeper or Windows SmartScreen may show a warning.
+Choose a package from [desktop installation](/PulseRN-Site/installation/) or [GitHub Releases](https://github.com/maahibhama/PulseRN/releases), then open PulseRN. Preview builds are unsigned, so macOS Gatekeeper or Windows SmartScreen may show a warning.
 
 ## 2. Add the SDK
 
@@ -63,4 +63,4 @@ adb reverse tcp:9090 tcp:9090
 
 ## Next steps
 
-Continue with the complete [SDK setup](/sdk/), explore the [inspectors](/features/), or review [privacy and redaction](/guides/#protect-sensitive-data).
+Continue with the complete [SDK setup](/PulseRN-Site/sdk/), explore the [inspectors](/PulseRN-Site/features/), or review [privacy and redaction](/PulseRN-Site/guides/#protect-sensitive-data).
