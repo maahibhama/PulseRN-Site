@@ -1,9 +1,59 @@
 {
   "source": "fallback",
-  "version": "Preview",
-  "name": "PulseRN preview builds",
-  "publishedAt": null,
-  "url": "https://github.com/maahibhama/PulseRN/releases",
-  "notes": "PulseRN is currently distributed as preview builds. Open GitHub Releases to choose the newest build for your platform.",
-  "assets": []
+  "version": "1.0.3",
+  "name": "PulseRN 1.0.3",
+  "publishedAt": "2026-08-01T18:00:53Z",
+  "url": "https://github.com/maahibhama/PulseRN/releases/tag/v1.0.3",
+  "notes": "PulseRN 1.0.3 adds scalable persistence, secure pairing, richer inspectors, local MCP access, and diagnostic intelligence.",
+  "assets": [
+    {
+      "key": "macArm64",
+      "label": "macOS · Apple silicon",
+      "name": "PulseRN-1.0.3-mac-arm64.dmg",
+      "url": "https://github.com/maahibhama/PulseRN/releases/download/v1.0.3/PulseRN-1.0.3-mac-arm64.dmg",
+      "size": 141735096
+    },
+    {
+      "key": "macX64",
+      "label": "macOS · Intel",
+      "name": "PulseRN-1.0.3-mac-x64.dmg",
+      "url": "https://github.com/maahibhama/PulseRN/releases/download/v1.0.3/PulseRN-1.0.3-mac-x64.dmg",
+      "size": 146487065
+    },
+    {
+      "key": "windowsX64",
+      "label": "Windows · x64",
+      "name": "PulseRN-1.0.3-windows-x64-setup.exe",
+      "url": "https://github.com/maahibhama/PulseRN/releases/download/v1.0.3/PulseRN-1.0.3-windows-x64-setup.exe",
+      "size": 115860688
+    },
+    {
+      "key": "windowsArm64",
+      "label": "Windows · ARM64",
+      "name": "PulseRN-1.0.3-windows-arm64-setup.exe",
+      "url": "https://github.com/maahibhama/PulseRN/releases/download/v1.0.3/PulseRN-1.0.3-windows-arm64-setup.exe",
+      "size": 110313292
+    },
+    {
+      "key": "linuxAppImage",
+      "label": "Linux · AppImage",
+      "name": "PulseRN-1.0.3-linux-x64.AppImage",
+      "url": "https://github.com/maahibhama/PulseRN/releases/download/v1.0.3/PulseRN-1.0.3-linux-x64.AppImage",
+      "size": 146813427
+    },
+    {
+      "key": "linuxDeb",
+      "label": "Linux · Debian",
+      "name": "PulseRN-1.0.3-linux-x64.deb",
+      "url": "https://github.com/maahibhama/PulseRN/releases/download/v1.0.3/PulseRN-1.0.3-linux-x64.deb",
+      "size": 116202976
+    },
+    {
+      "key": "checksums",
+      "label": "SHA-256 checksums",
+      "name": "SHA256SUMS.txt",
+      "url": "https://github.com/maahibhama/PulseRN/releases/download/v1.0.3/SHA256SUMS.txt",
+      "size": 771
+    }
+  ]
 }

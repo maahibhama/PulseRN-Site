@@ -1,5 +1,6 @@
 ---
 import { formatBytes, getLatestRelease } from "../lib/releases.mjs";
+import sdkFallback from "../data/sdk-fallback.json";
 
 const release = await getLatestRelease();
 const groups = [
@@ -9,11 +10,16 @@ const groups = [
 ];
 ---
 
-<section class="release-panel" aria-labelledby="release-heading">
+<section
+  class="release-panel"
+  aria-labelledby="release-heading"
+  data-release-panel
+  data-release-version={release.version}
+>
   <header class="release-heading">
     <div>
       <p class="eyebrow">Latest desktop release</p>
-      <h2 id="release-heading">
+      <h2 id="release-heading" data-release-heading>
         {
           release.version === "Preview"
             ? release.name
@@ -23,7 +29,7 @@ const groups = [
     </div>
     {
       release.publishedAt && (
-        <time datetime={release.publishedAt}>
+        <time datetime={release.publishedAt} data-release-date>
           {new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(
             new Date(release.publishedAt),
           )}
@@ -32,9 +38,20 @@ const groups = [
     }
   </header>
 
+  <div class="release-version-strip" aria-label="Published versions">
+    <span>
+      Desktop
+      <strong data-desktop-version>{release.version}</strong>
+    </span>
+    <a href={sdkFallback.url} data-sdk-link>
+      React Native SDK
+      <strong data-sdk-version>{sdkFallback.version}</strong>
+    </a>
+  </div>
+
   {
-    release.source === "fallback" && (
-      <aside class="release-notice" role="status">
+    release.source === "fallback" && release.assets.length === 0 && (
+      <aside class="release-notice" role="status" data-release-notice>
         Showing the checked-in release fallback.{" "}
         {"reason" in release ? release.reason : ""}
       </aside>
@@ -54,9 +71,13 @@ const groups = [
               {release.assets
                 .filter((asset) => group.keys.includes(asset.key))
                 .map((asset) => (
-                  <a class="download-link" href={asset.url}>
+                  <a
+                    class="download-link"
+                    href={asset.url}
+                    data-release-asset={asset.key}
+                  >
                     <span>{asset.label.replace(`${group.name} · `, "")}</span>
-                    <small>{formatBytes(asset.size)}</small>
+                    <small data-release-size>{formatBytes(asset.size)}</small>
                   </a>
                 ))}
             </div>
@@ -77,14 +98,214 @@ const groups = [
   }
 
   <footer class="release-footer">
-    <a href={release.url}>Release notes</a>
+    <a href={release.url} data-release-notes>Release notes</a>
     {
       release.assets.find((asset) => asset.key === "checksums") && (
-        <a href={release.assets.find((asset) => asset.key === "checksums").url}>
+        <a
+          href={release.assets.find((asset) => asset.key === "checksums").url}
+          data-release-checksums
+        >
           Verify checksums
         </a>
       )
     }
     <a href="https://github.com/maahibhama/PulseRN/releases">All releases</a>
   </footer>
+
+  <details class="release-notes-details">
+    <summary>What changed in this desktop release</summary>
+    <p data-release-notes-body>{release.notes}</p>
+  </details>
 </section>
+
+<script>
+  const desktopEndpoint =
+    "https://api.github.com/repos/maahibhama/PulseRN/releases/latest";
+  const sdkEndpoint = "https://registry.npmjs.org/@pulse-rn%2Fsdk/latest";
+  const desktopCacheKey = "pulsern-latest-desktop-release-v1";
+  const sdkCacheKey = "pulsern-latest-sdk-release-v1";
+  const cacheLifetime = 5 * 60 * 1000;
+
+  interface GitHubReleaseAsset {
+    name: string;
+    size: number;
+    browser_download_url: string;
+  }
+
+  interface GitHubRelease {
+    tag_name: string;
+    draft: boolean;
+    prerelease: boolean;
+    published_at?: string;
+    html_url: string;
+    body?: string;
+    assets?: GitHubReleaseAsset[];
+  }
+
+  interface NpmPackage {
+    version: string;
+  }
+
+  const definitions: readonly (readonly [string, RegExp])[] = [
+    ["macArm64", /^PulseRN-.+-mac-arm64\.dmg$/],
+    ["macX64", /^PulseRN-.+-mac-x64\.dmg$/],
+    ["windowsX64", /^PulseRN-.+-windows-x64-setup\.exe$/],
+    ["windowsArm64", /^PulseRN-.+-windows-arm64-setup\.exe$/],
+    ["linuxAppImage", /^PulseRN-.+-linux-x64\.AppImage$/],
+    ["linuxDeb", /^PulseRN-.+-linux-x64\.deb$/],
+    ["checksums", /^SHA256SUMS\.txt$/],
+  ];
+
+  function formatReleaseBytes(bytes: number) {
+    if (!bytes) return "";
+    const units = ["B", "KB", "MB", "GB"];
+    const exponent = Math.min(
+      Math.floor(Math.log(bytes) / Math.log(1024)),
+      units.length - 1,
+    );
+    return `${(bytes / 1024 ** exponent).toFixed(exponent ? 1 : 0)} ${units[exponent]}`;
+  }
+
+  function formatReleaseNotes(notes: string) {
+    return notes
+      .replace(/<!--[\s\S]*?-->/g, "")
+      .replace(/^#{1,6}\s+/gm, "")
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1 ($2)")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  }
+
+  function readCache<T>(key: string): T | undefined {
+    try {
+      const cached = JSON.parse(localStorage.getItem(key) ?? "null") as {
+        savedAt?: number;
+        value?: T;
+      } | null;
+      return cached &&
+        typeof cached.savedAt === "number" &&
+        cached.value &&
+        Date.now() - cached.savedAt < cacheLifetime
+        ? cached.value
+        : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  function writeCache(key: string, value: unknown) {
+    try {
+      localStorage.setItem(key, JSON.stringify({ savedAt: Date.now(), value }));
+    } catch {
+      // Storage is optional; live data can still update for this page view.
+    }
+  }
+
+  async function fetchLatestRelease(): Promise<GitHubRelease> {
+    const cached = readCache<GitHubRelease>(desktopCacheKey);
+    if (cached) return cached;
+
+    const response = await fetch(desktopEndpoint, {
+      headers: { Accept: "application/vnd.github+json" },
+    });
+    if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
+
+    const release = (await response.json()) as GitHubRelease;
+    if (!release || release.draft || release.prerelease || !release.tag_name) {
+      throw new Error("GitHub did not return a stable desktop release.");
+    }
+
+    writeCache(desktopCacheKey, release);
+    return release;
+  }
+
+  async function fetchLatestSdk(): Promise<NpmPackage> {
+    const cached = readCache<NpmPackage>(sdkCacheKey);
+    if (cached) return cached;
+
+    const response = await fetch(sdkEndpoint, {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) throw new Error(`npm returned ${response.status}`);
+
+    const packageMetadata = (await response.json()) as NpmPackage;
+    if (!packageMetadata?.version) {
+      throw new Error("npm did not return a published SDK version.");
+    }
+
+    writeCache(sdkCacheKey, packageMetadata);
+    return packageMetadata;
+  }
+
+  function updateReleasePanel(panel: HTMLElement, release: GitHubRelease) {
+    const version = release.tag_name.replace(/^v/, "");
+    const assets = Array.isArray(release.assets) ? release.assets : [];
+
+    panel.dataset.releaseVersion = version;
+    const heading = panel.querySelector("[data-release-heading]");
+    if (heading) heading.textContent = `PulseRN ${version}`;
+    const desktopVersion = panel.querySelector("[data-desktop-version]");
+    if (desktopVersion) desktopVersion.textContent = version;
+
+    const date = panel.querySelector("[data-release-date]");
+    if (date instanceof HTMLTimeElement && release.published_at) {
+      date.dateTime = release.published_at;
+      date.textContent = new Intl.DateTimeFormat("en", {
+        dateStyle: "medium",
+      }).format(new Date(release.published_at));
+    }
+
+    for (const [key, pattern] of definitions) {
+      const asset = assets.find((candidate) => pattern.test(candidate.name));
+      const link = panel.querySelector(`[data-release-asset="${key}"]`);
+      if (link instanceof HTMLAnchorElement) {
+        link.hidden = !asset;
+        if (asset) {
+          link.href = asset.browser_download_url;
+          const size = link.querySelector("[data-release-size]");
+          if (size) size.textContent = formatReleaseBytes(asset.size);
+        }
+      }
+
+      if (key === "checksums") {
+        const checksumLink = panel.querySelector("[data-release-checksums]");
+        if (checksumLink instanceof HTMLAnchorElement) {
+          checksumLink.hidden = !asset;
+          if (asset) checksumLink.href = asset.browser_download_url;
+        }
+      }
+    }
+
+    for (const link of panel.querySelectorAll("[data-release-notes]")) {
+      if (link instanceof HTMLAnchorElement) link.href = release.html_url;
+    }
+    const notes = panel.querySelector("[data-release-notes-body]");
+    if (notes && release.body) {
+      notes.textContent = formatReleaseNotes(release.body);
+    }
+    panel.querySelector("[data-release-notice]")?.remove();
+  }
+
+  function updateSdkVersion(packageMetadata: NpmPackage) {
+    for (const version of document.querySelectorAll("[data-sdk-version]")) {
+      version.textContent = packageMetadata.version;
+    }
+    for (const link of document.querySelectorAll("[data-sdk-link]")) {
+      if (link instanceof HTMLAnchorElement) {
+        link.href = "https://www.npmjs.com/package/@pulse-rn/sdk";
+      }
+    }
+  }
+
+  Promise.allSettled([fetchLatestRelease(), fetchLatestSdk()]).then(
+    ([desktopResult, sdkResult]) => {
+      if (desktopResult.status === "fulfilled") {
+        for (const panel of document.querySelectorAll("[data-release-panel]")) {
+          if (panel instanceof HTMLElement) {
+            updateReleasePanel(panel, desktopResult.value);
+          }
+        }
+      }
+      if (sdkResult.status === "fulfilled") updateSdkVersion(sdkResult.value);
+    },
+  );
+</script>

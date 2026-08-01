@@ -82,6 +82,8 @@ test("uses checked-in fallback when the API is unavailable", async () => {
     strict: false,
   });
   assert.equal(release.source, "fallback");
+  assert.equal(release.version, "1.0.3");
+  assert.equal(release.assets.length, assetDefinitions.length);
   assert.match(release.reason, /unavailable/);
 });
 

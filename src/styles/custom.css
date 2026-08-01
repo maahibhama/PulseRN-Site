@@ -389,6 +389,27 @@ body {
   color: var(--pulse-muted);
   font-size: 0.8rem;
 }
+.release-version-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: -0.75rem 0 2rem;
+}
+.release-version-strip span,
+.release-version-strip a {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 0.45rem 0.7rem;
+  color: var(--pulse-muted);
+  border: 1px solid var(--pulse-line);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+.release-version-strip strong {
+  color: var(--pulse-ink);
+}
 .release-notice {
   margin-bottom: 1.5rem;
   padding: 0.75rem 1rem;
@@ -450,6 +471,27 @@ body {
 }
 .release-footer a {
   color: var(--pulse-muted);
+}
+.release-notes-details {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--pulse-line);
+}
+.release-notes-details summary {
+  color: var(--pulse-ink);
+  cursor: pointer;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+.release-notes-details p {
+  max-height: 22rem;
+  margin: 1rem 0 0;
+  overflow: auto;
+  color: var(--pulse-muted);
+  font-family: var(--sl-font-system-mono);
+  font-size: 0.76rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
 }
 
 .contribute-band {
