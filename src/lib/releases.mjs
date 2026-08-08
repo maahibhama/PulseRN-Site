@@ -38,8 +38,22 @@ export const assetDefinitions = [
   },
 ];
 
+export function isDesktopRelease(payload) {
+  return Boolean(
+    payload &&
+    !payload.draft &&
+    !payload.prerelease &&
+    /^v\d+\.\d+\.\d+$/.test(payload.tag_name),
+  );
+}
+
+export function selectLatestDesktopRelease(payloads) {
+  if (!Array.isArray(payloads)) return undefined;
+  return payloads.find(isDesktopRelease);
+}
+
 export function parseRelease(payload, { strict = false } = {}) {
-  if (!payload || payload.draft || payload.prerelease || !payload.tag_name) {
+  if (!isDesktopRelease(payload)) {
     throw new Error("The GitHub response is not a stable PulseRN release.");
   }
 
@@ -101,13 +115,19 @@ export async function getLatestRelease(options = {}) {
     if (token) headers.Authorization = `Bearer ${token}`;
 
     const response = await fetchImpl(
-      "https://api.github.com/repos/maahibhama/PulseRN/releases/latest",
+      "https://api.github.com/repos/maahibhama/PulseRN/releases?per_page=100",
       { headers, signal: AbortSignal.timeout(5000) },
     );
     if (response.status === 404)
       return { ...fallback, reason: "No stable release is published yet." };
     if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
-    return parseRelease(await response.json(), { strict });
+    const release = selectLatestDesktopRelease(await response.json());
+    if (!release)
+      return {
+        ...fallback,
+        reason: "No stable desktop release is published yet.",
+      };
+    return parseRelease(release, { strict });
   } catch (error) {
     if (strict && /incomplete/.test(String(error))) throw error;
     return {

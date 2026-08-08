@@ -3,7 +3,9 @@ import test from "node:test";
 import {
   assetDefinitions,
   getLatestRelease,
+  isDesktopRelease,
   parseRelease,
+  selectLatestDesktopRelease,
 } from "../src/lib/releases.mjs";
 
 const completeRelease = {
@@ -43,12 +45,50 @@ test("rejects prereleases as latest stable releases", () => {
   );
 });
 
+test("recognizes only stable desktop release tags", () => {
+  assert.equal(isDesktopRelease(completeRelease), true);
+  assert.equal(
+    isDesktopRelease({ ...completeRelease, tag_name: "cli-v1.0.4" }),
+    false,
+  );
+  assert.equal(
+    isDesktopRelease({ ...completeRelease, tag_name: "sdk-v0.2.1" }),
+    false,
+  );
+});
+
+test("selects the desktop release when newer CLI and SDK releases exist", () => {
+  const cliRelease = { ...completeRelease, tag_name: "cli-v1.0.4" };
+  const sdkRelease = { ...completeRelease, tag_name: "sdk-v0.2.1" };
+  assert.equal(
+    selectLatestDesktopRelease([cliRelease, sdkRelease, completeRelease]),
+    completeRelease,
+  );
+});
+
+test("loads the desktop release when newer CLI and SDK releases exist", async () => {
+  const release = await getLatestRelease({
+    fetchImpl: async () => ({
+      status: 200,
+      ok: true,
+      json: async () => [
+        { ...completeRelease, tag_name: "cli-v1.0.4" },
+        { ...completeRelease, tag_name: "sdk-v0.2.1" },
+        completeRelease,
+      ],
+    }),
+    strict: true,
+  });
+  assert.equal(release.version, "0.2.0");
+  assert.equal(release.assets.length, assetDefinitions.length);
+});
+
 test("falls back when only a prerelease is returned", async () => {
   const release = await getLatestRelease({
     fetchImpl: async () => ({
       ok: true,
       status: 200,
-      json: async () => ({ ...completeRelease, prerelease: true }),
+      json: async () => [{ ...completeRelease, prerelease: true }],
     }),
     strict: false,
   });
@@ -94,4 +134,20 @@ test("uses checked-in fallback when no stable release exists", async () => {
   });
   assert.equal(release.source, "fallback");
   assert.match(release.reason, /No stable release/);
+});
+
+test("uses checked-in fallback when the release list has no desktop release", async () => {
+  const release = await getLatestRelease({
+    fetchImpl: async () => ({
+      status: 200,
+      ok: true,
+      json: async () => [
+        { ...completeRelease, tag_name: "cli-v1.0.4" },
+        { ...completeRelease, tag_name: "sdk-v0.2.1" },
+      ],
+    }),
+    strict: true,
+  });
+  assert.equal(release.source, "fallback");
+  assert.match(release.reason, /No stable desktop release/);
 });

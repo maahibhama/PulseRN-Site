@@ -120,9 +120,9 @@ const groups = [
 
 <script>
   const desktopEndpoint =
-    "https://api.github.com/repos/maahibhama/PulseRN/releases/latest";
+    "https://api.github.com/repos/maahibhama/PulseRN/releases?per_page=100";
   const sdkEndpoint = "https://registry.npmjs.org/@pulse-rn%2Fsdk/latest";
-  const desktopCacheKey = "pulsern-latest-desktop-release-v1";
+  const desktopCacheKey = "pulsern-latest-desktop-release-v2";
   const sdkCacheKey = "pulsern-latest-sdk-release-v1";
   const cacheLifetime = 5 * 60 * 1000;
 
@@ -140,6 +140,14 @@ const groups = [
     html_url: string;
     body?: string;
     assets?: GitHubReleaseAsset[];
+  }
+
+  function isDesktopRelease(release: GitHubRelease) {
+    return (
+      !release.draft &&
+      !release.prerelease &&
+      /^v\d+\.\d+\.\d+$/.test(release.tag_name)
+    );
   }
 
   interface NpmPackage {
@@ -202,17 +210,19 @@ const groups = [
 
   async function fetchLatestRelease(): Promise<GitHubRelease> {
     const cached = readCache<GitHubRelease>(desktopCacheKey);
-    if (cached) return cached;
+    if (cached && isDesktopRelease(cached)) return cached;
 
     const response = await fetch(desktopEndpoint, {
       headers: { Accept: "application/vnd.github+json" },
     });
     if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
 
-    const release = (await response.json()) as GitHubRelease;
-    if (!release || release.draft || release.prerelease || !release.tag_name) {
+    const releases = (await response.json()) as GitHubRelease[];
+    const release = Array.isArray(releases)
+      ? releases.find(isDesktopRelease)
+      : undefined;
+    if (!release)
       throw new Error("GitHub did not return a stable desktop release.");
-    }
 
     writeCache(desktopCacheKey, release);
     return release;
