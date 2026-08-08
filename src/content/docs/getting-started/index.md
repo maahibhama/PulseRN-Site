@@ -1,21 +1,33 @@
 ---
 title: Getting started
-description: Install PulseRN, connect a React Native development build, and confirm the first events.
+description: Start PulseRN on desktop or in a browser, connect a React Native development build, and confirm the first events.
 ---
 
-PulseRN combines a desktop debugger with the `@pulse-rn/sdk` package. The SDK captures development events and sends them to the desktop app’s chronological timeline.
+PulseRN combines a local debugger with the `@pulse-rn/sdk` package. Run the debugger as a packaged
+desktop application or launch the same interface in your browser. The SDK captures development
+events and sends them to PulseRN's chronological timeline.
 
 ## Prerequisites
 
 - A React Native development build
-- PulseRN desktop running on the same computer as Metro
-- Node.js 20.19 or newer only when developing PulseRN itself
+- PulseRN running on the same computer as Metro
+- Node.js 22.5 or newer when using the browser edition
 
 Expo Go cannot load native MMKV integrations; use an Expo development build when your app uses MMKV.
 
-## 1. Install the desktop app
+## 1. Start PulseRN
 
-Choose a package from [desktop installation](/PulseRN-Site/installation/) or [GitHub Releases](https://github.com/maahibhama/PulseRN/releases), then open PulseRN. Preview builds are unsigned, so macOS Gatekeeper or Windows SmartScreen may show a warning.
+Choose one of these local interfaces:
+
+- **Browser:** with Node.js 22.5 or newer, run `npx @maahibhama/pulsern`. Keep the terminal open
+  while debugging and press `Ctrl+C` to stop PulseRN.
+- **Desktop:** choose a package from [desktop installation](/PulseRN-Site/installation/) or
+  [GitHub Releases](https://github.com/maahibhama/PulseRN/releases), then open PulseRN. Preview builds
+  are unsigned, so macOS Gatekeeper or Windows SmartScreen may show a warning.
+
+The browser edition opens at `http://localhost:3000` and uses the same default SDK port, `9090`.
+See [Run in a browser](/PulseRN-Site/browser/) for Homebrew installation, custom ports, persistence,
+and security guidance.
 
 ## 2. Add the SDK
 
@@ -47,7 +59,8 @@ Keep `allowInProduction` at its default value, `false`.
 
 ## 3. Run and verify
 
-Start PulseRN before launching the app. Generate a `console.log` or network request. A connected device and its events should appear in the desktop timeline.
+Start PulseRN before launching the app. Generate a `console.log` or network request. A connected
+device and its events should appear in the timeline.
 
 Use `127.0.0.1` for the iOS Simulator and `10.0.2.2` for the Android Emulator. For an attached Android device, reverse the port:
 
@@ -55,13 +68,13 @@ Use `127.0.0.1` for the iOS Simulator and `10.0.2.2` for the Android Emulator. F
 adb reverse tcp:9090 tcp:9090
 ```
 
-For a physical device over Wi-Fi, enable authenticated LAN access in desktop Settings and follow
+For a physical device over Wi-Fi, enable authenticated LAN access in PulseRN Settings and follow
 [Connections and secure pairing](/PulseRN-Site/connections/). LAN connections require a one-time
 pairing code or a previously issued reconnect token.
 
 ## Troubleshooting
 
-- **No device appears:** confirm PulseRN is open, the port is `9090`, and the app is a development build.
+- **No device appears:** confirm PulseRN is running, the port is `9090`, and the app is a development build.
 - **Android cannot connect:** use `10.0.2.2` for an emulator or configure `adb reverse` for a USB device.
 - **Physical device cannot connect:** enable LAN access, use the computer's LAN IP, and create a fresh pairing code.
 - **Duplicate network events:** avoid enabling an Axios interceptor for requests already captured by the global fetch/XHR instrumentation.

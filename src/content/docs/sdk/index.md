@@ -85,7 +85,7 @@ ReactNativeDevTool.configure({
 ```
 
 Use the returned `reconnectToken` on later launches. Set `secure: true` only after configuring TLS
-in the desktop app and installing trust for the certificate authority on the device. See
+in PulseRN Settings and installing trust for the certificate authority on the device. See
 [Connections and secure pairing](/PulseRN-Site/connections/).
 
 ## Preserve device and session identity
@@ -158,7 +158,7 @@ or undoable. The desktop validates types and asks for confirmation before mutati
 
 ## Expected result
 
-The desktop app identifies the configured application and enables inspectors for each active integration.
+PulseRN identifies the configured application and enables inspectors for each active integration.
 
 For focused examples, see [Features](/PulseRN-Site/features/) and
 [Common workflows](/PulseRN-Site/guides/). For exported symbols and limits, see

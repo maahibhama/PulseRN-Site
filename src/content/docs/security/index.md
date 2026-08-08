@@ -14,14 +14,16 @@ Report vulnerabilities privately to the repository maintainers. Do not open a pu
   token hashes are stored with user-only permissions and can be revoked per device.
 - LAN handshakes validate the Host header and reject mismatched browser origins.
 - Optional TLS uses a user-supplied PEM certificate and matching private key. Key material remains
-  in Electron main and is never exposed through the renderer.
+  in the privileged desktop or CLI process and is never exposed through the renderer.
 - Electron uses context isolation, disables Node integration, and sandboxes the renderer.
 - Preload exposes narrow validated operations rather than raw Electron IPC or Node APIs.
+- The browser edition binds its interface to loopback by default and establishes an authenticated
+  browser session through a one-time setup address. Saved browser sessions can be revoked.
 - Network, protocol, storage, debugger, and preferences input is validated.
 - Frames, batches, queues, payloads, storage requests, and error context are bounded.
 - Structured fields, network headers, URL queries, Redux state, navigation parameters, and custom metadata support redaction before transmission.
 - Binary network bodies are excluded; captured text and JSON bodies are size-limited.
-- Storage mutations require explicit desktop confirmation, and redacted JSON cannot be updated.
+- Storage mutations require explicit confirmation, and redacted JSON cannot be updated.
 - Storage audit events never include stored values.
 - Remote content, arbitrary navigation/window opening, and `eval` are disallowed.
 - MCP access is disabled by default, uses a local authenticated socket or named pipe, supports

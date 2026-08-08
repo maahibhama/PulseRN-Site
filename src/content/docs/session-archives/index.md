@@ -18,7 +18,7 @@ picker and restores accepted data into the local database.
 
 ## Import validation
 
-Electron main validates an archive before changing SQLite. It rejects:
+PulseRN's privileged desktop or CLI process validates an archive before changing SQLite. It rejects:
 
 - unknown archive versions;
 - malformed events or relationships;

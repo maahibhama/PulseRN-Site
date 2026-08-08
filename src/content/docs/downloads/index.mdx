@@ -1,12 +1,26 @@
 ---
-title: Download PulseRN
-description: Download the latest PulseRN desktop debugger for macOS, Windows, and Linux.
+title: Download or run PulseRN
+description: Download the PulseRN desktop debugger or launch the same interface locally in a browser.
 ---
 
 import ReleaseDownloads from "../../../components/ReleaseDownloads.astro";
 
 PulseRN desktop builds are published through GitHub Releases. Pick the build that matches your
 computer, then follow the [installation guide](/PulseRN-Site/installation/) to get connected.
+
+## Run in a browser
+
+With Node.js 22.5 or newer, start the same debugger UI without installing Electron:
+
+```sh
+npx @maahibhama/pulsern
+```
+
+PulseRN opens an authenticated local browser session and runs until you press `Ctrl+C`. See the
+[browser setup guide](/PulseRN-Site/browser/) for Homebrew installation, ports, persistence, and
+security details.
+
+## Download the desktop app
 
 <ReleaseDownloads />
 

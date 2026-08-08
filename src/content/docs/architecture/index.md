@@ -8,6 +8,7 @@ PulseRN is a pnpm/Turborepo monorepo. Its versioned wire contract is independent
 ## Package responsibilities
 
 - `apps/desktop`: Electron main/preload/renderer, connection server, persistence, and OS integration.
+- `packages/cli`: authenticated local browser server, Node.js lifecycle, and published CLI entry point.
 - `apps/example-react-native`: Expo development-build example.
 - `apps/example-react-native-cli`: bare Community CLI example.
 - `packages/protocol`: message types, schemas, negotiation, and JSON decoding.
@@ -23,12 +24,16 @@ React Native SDK
   → parse JSON as unknown
   → Zod validation + negotiation
   → SQLite transaction + session projection
-  → cursor-paginated validated Electron IPC
+  → cursor-paginated validated Electron IPC or authenticated local browser API
   → Zustand renderer store
   → bounded virtualized timeline and inspectors
 ```
 
-Electron main is the trusted boundary. The renderer is sandboxed with context isolation and no Node integration. Preload exposes narrow, typed operations rather than raw IPC.
+Electron main is the trusted boundary in the desktop edition. The renderer is sandboxed with
+context isolation and no Node integration, and preload exposes narrow, typed operations rather than
+raw IPC. In the browser edition, the local CLI process owns networking, validation, persistence,
+settings, and debugger services while the authenticated loopback interface consumes bounded API
+responses.
 
 ## Debugger and settings
 
@@ -38,7 +43,9 @@ capabilities, restores debugger state after reloads, and sends only narrow comma
 across preload. React component inspection reads development-only Fiber roots through this same
 connection and remains read-only.
 
-Preferences cross validated IPC and are atomically stored with user-only permissions under Electron’s platform `userData` directory.
+Preferences cross a validated desktop IPC or local browser API boundary and are atomically stored
+with user-only permissions. Electron and browser editions intentionally use separate data
+directories.
 
 ## Storage and persistence
 

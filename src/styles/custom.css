@@ -166,6 +166,7 @@ body {
 .showcase,
 .capabilities,
 .workflow,
+.browser-launch,
 .app-preview,
 .release-panel {
   margin-block: clamp(5rem, 10vw, 9rem);
@@ -252,6 +253,55 @@ body {
   grid-template-columns: 0.9fr 1.1fr;
   gap: clamp(3rem, 8vw, 7rem);
   align-items: center;
+}
+.browser-launch {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: clamp(2.5rem, 7vw, 6rem);
+  align-items: center;
+  padding: clamp(2rem, 5vw, 4rem);
+  border: 1px solid var(--pulse-line);
+  border-radius: 0.8rem;
+  background: var(--pulse-wash);
+}
+.browser-launch h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+.browser-launch > div > p:not(.eyebrow) {
+  margin-bottom: 1.7rem;
+  color: var(--pulse-muted);
+  line-height: 1.7;
+}
+.browser-command {
+  overflow: hidden;
+  border: 1px solid var(--pulse-line);
+  border-radius: 0.65rem;
+  background: var(--pulse-surface);
+  box-shadow: 0 20px 45px rgba(7, 30, 27, 0.12);
+}
+.browser-command > span,
+.browser-command > small {
+  display: block;
+  padding: 0.8rem 1rem;
+  color: var(--pulse-muted);
+  font-family: monospace;
+  font-size: 0.72rem;
+}
+.browser-command > span {
+  border-bottom: 1px solid var(--pulse-line);
+}
+.browser-command > small {
+  border-top: 1px solid var(--pulse-line);
+}
+.browser-command pre {
+  margin: 0;
+  padding: 1.6rem 1rem;
+  border: 0;
+  background: transparent;
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
 }
 .workflow ol {
   margin: 2rem 0;
@@ -547,6 +597,7 @@ body {
   }
   .capability-grid,
   .workflow,
+  .browser-launch,
   .app-preview,
   .download-grid {
     grid-template-columns: 1fr;

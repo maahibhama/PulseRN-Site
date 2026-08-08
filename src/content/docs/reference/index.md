@@ -56,7 +56,8 @@ source search/context, and MCP access modes.
 | Archive compressed size   |      100 MiB |
 | Archive decompressed size |      512 MiB |
 
-Invalid JSON and schema-invalid data are logged and discarded by Electron main; they never enter the renderer.
+Invalid JSON and schema-invalid data are logged and discarded by PulseRN's privileged desktop or
+CLI process; they never enter the renderer.
 
 ## Compatibility
 

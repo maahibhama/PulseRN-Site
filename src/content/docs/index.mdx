@@ -1,11 +1,11 @@
 ---
 title: PulseRN
-description: See every signal. Debug the whole story with PulseRN, the open-source desktop debugger for React Native.
+description: See every signal. Debug the whole story with PulseRN, the open-source local debugger for React Native on desktop or in your browser.
 template: splash
 editUrl: false
 lastUpdated: false
 hero:
-  tagline: The open-source desktop debugger that brings your React Native app’s entire story into one timeline.
+  tagline: The open-source local debugger that brings your React Native app’s entire story into one timeline—on desktop or in your browser.
   image:
     dark: ../../assets/pulse-rn-app-icon-dark.png
     light: ../../assets/pulse-rn-app-icon-light.png
@@ -17,6 +17,9 @@ hero:
     - text: Download PulseRN
       link: /PulseRN-Site/downloads/
       icon: download
+    - text: Run in a browser
+      link: /PulseRN-Site/browser/
+      icon: rocket
     - text: View on GitHub
       link: https://github.com/maahibhama/PulseRN
       icon: external
@@ -34,7 +37,7 @@ import SdkCodeWindow from "../../components/SdkCodeWindow.astro";
     <i aria-hidden="true"></i> Actively developed
   </span>
   <span>MIT licensed</span>
-  <span>macOS · Windows · Linux</span>
+  <span>Desktop · Browser · Local-first</span>
 </div>
 
 <section class="showcase" aria-labelledby="showcase-heading">
@@ -142,8 +145,8 @@ import SdkCodeWindow from "../../components/SdkCodeWindow.astro";
     <h2 id="workflow-heading">Connect in minutes.</h2>
     <ol>
       <li>
-        <strong>Install PulseRN</strong>
-        <span>Choose the desktop build for your platform.</span>
+        <strong>Start PulseRN</strong>
+        <span>Install the desktop app or launch the debugger with npx.</span>
       </li>
       <li>
         <strong>Add the SDK</strong>
@@ -161,6 +164,29 @@ import SdkCodeWindow from "../../components/SdkCodeWindow.astro";
     </a>
   </div>
   <SdkCodeWindow />
+</section>
+
+<section class="browser-launch" aria-labelledby="browser-launch-heading">
+  <div>
+    <p class="eyebrow">No Electron installation required</p>
+    <h2 id="browser-launch-heading">Run the debugger in your browser.</h2>
+    <p>
+      With Node.js 22.5 or newer, launch the same PulseRN debugger UI locally
+      from the published CLI. It opens an authenticated browser session, keeps
+      history in local SQLite storage, and stops cleanly with{" "}
+      <code>Ctrl+C</code>.
+    </p>
+    <a class="primary-cta" href="/PulseRN-Site/browser/">
+      Browser setup guide <span aria-hidden="true">→</span>
+    </a>
+  </div>
+  <div class="browser-command" aria-label="PulseRN browser command">
+    <span>Terminal</span>
+    <pre>
+      <code>npx @maahibhama/pulsern</code>
+    </pre>
+    <small>Browser UI :3000 · SDK :9090 · Metro :8081</small>
+  </div>
 </section>
 
 <section class="app-preview" aria-labelledby="preview-heading">

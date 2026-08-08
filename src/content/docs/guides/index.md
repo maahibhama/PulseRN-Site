@@ -70,7 +70,7 @@ Structured values are recursively redacted before transmission. Avoid embedding 
 
 ## Diagnose a missing connection
 
-1. Confirm the desktop app is open and listening on `9090`.
+1. Confirm the PulseRN desktop or browser edition is running and listening on `9090`.
 2. Confirm the SDK is configured only in a development build.
 3. Use the correct simulator host from [Getting started](/PulseRN-Site/getting-started/).
 4. Check `client.getStats()` for queueing or dropped events.

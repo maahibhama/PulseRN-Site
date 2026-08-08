@@ -1,6 +1,6 @@
 ---
 title: Releasing
-description: Prepare, validate, and publish PulseRN desktop and SDK releases.
+description: Prepare, validate, and publish PulseRN desktop, browser CLI, and SDK releases.
 ---
 
 Only maintainers with repository and publishing access should run release commands. Start from a clean working tree.
@@ -58,9 +58,29 @@ pnpm release:sdk 0.2.1
 
 Stable `sdk-vX.Y.Z` tags publish to npm’s `latest` channel; prereleases publish to `next`. Use `--replace-tag` only to recover a tag whose version was not published. Use `--skip-checks` only when the exact commit already passed the full suite.
 
+## Browser CLI release
+
+Preview without changing files or Git:
+
+```bash
+pnpm release:cli 1.0.4 --dry-run
+```
+
+Publish the `@maahibhama/pulsern` npm package, matching GitHub Release tarball, checksums, and
+Homebrew formula from a version tag:
+
+```bash
+pnpm release:cli 1.0.4
+```
+
+Stable `cli-vX.Y.Z` tags publish to npm's `latest` channel; prereleases publish to `next`. The
+release workflow installs the packed CLI in a clean location and verifies its version, help output,
+and Homebrew formula before publishing.
+
 ## Release documentation checklist
 
 - Verify installer commands and artifact links.
+- Verify browser CLI, npx, Homebrew, and Node.js requirements.
 - Verify SDK version and API examples.
 - Update compatibility and roadmap status.
 - Confirm download checksums.

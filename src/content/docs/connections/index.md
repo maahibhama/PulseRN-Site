@@ -49,7 +49,7 @@ ReactNativeDevTool.configure({
 }).connect();
 ```
 
-Trusted credentials are stored as hashes by the desktop app. Revoke a device from **Connections** at
+Trusted credentials are stored as hashes by PulseRN. Revoke a device from **Connections** at
 any time; it must pair again before reconnecting over LAN.
 
 ## Optional TLS

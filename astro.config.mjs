@@ -10,7 +10,7 @@ export default defineConfig({
     starlight({
       title: "PulseRN",
       description:
-        "The open-source React Native debugging desktop app and SDK.",
+        "The open-source local React Native debugger for desktop and browser.",
       favicon: "/favicon.svg",
       customCss: ["./src/styles/custom.css"],
       head: [
@@ -27,7 +27,7 @@ export default defineConfig({
           attrs: {
             property: "og:description",
             content:
-              "The open-source desktop debugger for React Native, with every signal in one timeline.",
+              "Run the open-source React Native debugger on desktop or in a local browser, with every signal in one timeline.",
           },
         },
         {
@@ -73,6 +73,7 @@ export default defineConfig({
           items: [
             { label: "Getting Started", slug: "getting-started" },
             { label: "Installation", slug: "installation" },
+            { label: "Run in a browser", slug: "browser" },
             { label: "SDK Setup", slug: "sdk" },
             { label: "Compatibility", slug: "compatibility" },
             { label: "Downloads", slug: "downloads" },
@@ -131,6 +132,10 @@ export default defineConfig({
             {
               label: "MCP for React Native debugging",
               slug: "blog/mcp-for-react-native-debugging",
+            },
+            {
+              label: "Run PulseRN in a browser",
+              slug: "blog/run-pulsern-in-a-browser",
             },
           ],
         },

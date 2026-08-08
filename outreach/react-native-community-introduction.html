@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
+    <title>Introducing PulseRN for React Native debugging</title>
+    <style>
+      @media only screen and (max-width: 620px) {
+        .email-shell {
+          width: 100% !important;
+        }
+
+        .email-content {
+          padding-right: 24px !important;
+          padding-left: 24px !important;
+        }
+
+        .email-title {
+          font-size: 30px !important;
+          line-height: 36px !important;
+        }
+
+        .email-button {
+          display: block !important;
+          text-align: center !important;
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body,
+        .email-background {
+          background-color: #07110e !important;
+        }
+
+        .email-shell,
+        .email-content {
+          background-color: #0b1714 !important;
+        }
+
+        .email-title,
+        .email-heading,
+        .email-body {
+          color: #edf8f4 !important;
+        }
+
+        .email-muted {
+          color: #a5b9b2 !important;
+        }
+
+        .email-panel {
+          background-color: #0c2823 !important;
+          border-color: #28443c !important;
+        }
+
+        .email-divider {
+          border-color: #28443c !important;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="email-background"
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f0faf7;
+      font-family:
+        -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Arial,
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+    "
+  >
+    <!-- Suggested subject: I built an open-source React Native debugger—and I’d value your feedback -->
+    <!-- Preheader text -->
+    <div
+      style="
+        display: none;
+        max-height: 0;
+        overflow: hidden;
+        color: transparent;
+        opacity: 0;
+      "
+    >
+      PulseRN brings logs, requests, navigation, Redux, performance, and errors
+      into one chronological debugging workspace.
+    </div>
+
+    <table
+      role="presentation"
+      align="center"
+      width="100%"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      style="
+        width: 100%;
+        margin: 0 auto;
+        background-color: #f0faf7;
+        border-collapse: collapse;
+      "
+    >
+      <tr>
+        <td
+          align="center"
+          valign="top"
+          style="padding: 32px 12px; text-align: center"
+        >
+          <table
+            role="presentation"
+            class="email-shell"
+            align="center"
+            width="600"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            style="
+              width: 600px;
+              max-width: 600px;
+              margin: 0 auto;
+              overflow: hidden;
+              background-color: #ffffff;
+              border: 1px solid #dce5e1;
+              border-radius: 14px;
+              box-shadow: 0 18px 50px rgba(9, 47, 42, 0.08);
+              text-align: left;
+            "
+          >
+            <tr>
+              <td
+                class="email-content"
+                style="
+                  padding: 28px 40px;
+                  background-color: #ffffff;
+                  border-bottom: 1px solid #dce5e1;
+                "
+              >
+                <a
+                  href="https://maahibhama.github.io/PulseRN-Site/"
+                  style="
+                    color: #087f6f;
+                    font-size: 21px;
+                    font-weight: 800;
+                    letter-spacing: -0.4px;
+                    text-decoration: none;
+                  "
+                >
+                  PulseRN
+                </a>
+                <span
+                  class="email-muted"
+                  style="
+                    margin-left: 9px;
+                    color: #697b75;
+                    font-size: 13px;
+                    font-weight: 600;
+                  "
+                >
+                  Open-source React Native debugger
+                </span>
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                class="email-content"
+                style="padding: 42px 40px 18px; background-color: #ffffff"
+              >
+                <p
+                  class="email-body"
+                  style="
+                    margin: 0 0 22px;
+                    color: #182320;
+                    font-size: 16px;
+                    line-height: 26px;
+                  "
+                >
+                  Hi there,
+                </p>
+
+                <h1
+                  class="email-title"
+                  style="
+                    margin: 0 0 22px;
+                    color: #13211d;
+                    font-size: 38px;
+                    font-weight: 800;
+                    line-height: 44px;
+                    letter-spacing: -1.4px;
+                  "
+                >
+                  I built a debugger that keeps the React Native story together.
+                </h1>
+
+                <p
+                  class="email-body"
+                  style="
+                    margin: 0 0 18px;
+                    color: #30413c;
+                    font-size: 16px;
+                    line-height: 27px;
+                  "
+                >
+                  I’m Mahendra, the creator of
+                  <a
+                    href="https://github.com/maahibhama/PulseRN"
+                    style="color: #087f6f; font-weight: 700"
+                    >PulseRN</a
+                  >. I built it because debugging a React Native issue often
+                  means jumping between console output, network requests, state
+                  tools, navigation events, and error traces—then trying to
+                  reconstruct what happened from memory.
+                </p>
+
+                <p
+                  class="email-body"
+                  style="
+                    margin: 0 0 26px;
+                    color: #30413c;
+                    font-size: 16px;
+                    line-height: 27px;
+                  "
+                >
+                  PulseRN brings those signals into one chronological desktop
+                  timeline, so developers can move from the visible symptom to
+                  the event that caused it.
+                </p>
+
+                <table
+                  role="presentation"
+                  class="email-panel"
+                  width="100%"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  style="
+                    width: 100%;
+                    background-color: #f0faf7;
+                    border: 1px solid #d6ebe5;
+                    border-radius: 10px;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 24px">
+                      <h2
+                        class="email-heading"
+                        style="
+                          margin: 0 0 14px;
+                          color: #13211d;
+                          font-size: 18px;
+                          line-height: 24px;
+                        "
+                      >
+                        What it brings together
+                      </h2>
+                      <p
+                        class="email-body"
+                        style="
+                          margin: 0;
+                          color: #40524c;
+                          font-size: 15px;
+                          line-height: 26px;
+                        "
+                      >
+                        ✓ Console, network, Redux, navigation, performance, and
+                        errors<br />
+                        ✓ Hermes debugging with original TypeScript sources<br />
+                        ✓ Local-first sessions with configurable redaction<br />
+                        ✓ Expo development builds and bare React Native apps<br />
+                        ✓ MCP workflows for evidence-backed AI debugging
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p
+                  class="email-body"
+                  style="
+                    margin: 26px 0;
+                    color: #30413c;
+                    font-size: 16px;
+                    line-height: 27px;
+                  "
+                >
+                  PulseRN is open source and actively evolving. I’m reaching out
+                  because your experience in the React Native community would
+                  make your feedback especially valuable. If you have a few
+                  minutes to look at the project—or try it with a development
+                  app—I’d love to hear what feels useful, what is missing, and
+                  where the workflow could be clearer.
+                </p>
+
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                >
+                  <tr>
+                    <td style="padding: 0 0 12px">
+                      <a
+                        class="email-button"
+                        href="https://github.com/maahibhama/PulseRN"
+                        style="
+                          display: inline-block;
+                          padding: 14px 22px;
+                          color: #ffffff;
+                          background-color: #087f6f;
+                          border-radius: 8px;
+                          font-size: 15px;
+                          font-weight: 750;
+                          line-height: 20px;
+                          text-decoration: none;
+                        "
+                      >
+                        View PulseRN on GitHub →
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <a
+                        href="https://maahibhama.github.io/PulseRN-Site/getting-started/"
+                        style="
+                          color: #087f6f;
+                          font-size: 14px;
+                          font-weight: 700;
+                        "
+                      >
+                        Read the getting-started guide
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p
+                  class="email-body"
+                  style="
+                    margin: 30px 0 0;
+                    color: #30413c;
+                    font-size: 16px;
+                    line-height: 27px;
+                  "
+                >
+                  Thanks for your time—and for everything you contribute to the
+                  React Native community.
+                </p>
+
+                <p
+                  class="email-body"
+                  style="
+                    margin: 18px 0 0;
+                    color: #182320;
+                    font-size: 16px;
+                    line-height: 25px;
+                  "
+                >
+                  Mahendra Bhama<br />
+                  <span class="email-muted" style="color: #697b75"
+                    >Creator of PulseRN</span
+                  ><br />
+                  <a
+                    href="mailto:maahibhama@gmail.com"
+                    style="
+                      color: #087f6f;
+                      font-size: 15px;
+                      font-weight: 650;
+                      text-decoration: none;
+                    "
+                    >maahibhama@gmail.com</a
+                  >
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                class="email-content"
+                style="padding: 24px 40px 30px; background-color: #ffffff"
+              >
+                <div
+                  class="email-divider"
+                  style="padding-top: 20px; border-top: 1px solid #dce5e1"
+                >
+                  <p
+                    class="email-muted"
+                    style="
+                      margin: 0;
+                      color: #697b75;
+                      font-size: 12px;
+                      line-height: 19px;
+                    "
+                  >
+                    You’re receiving this personal introduction because of your
+                    work in the React Native community. This is not an automated
+                    newsletter. If you’d prefer not to receive another message,
+                    just let me know.
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

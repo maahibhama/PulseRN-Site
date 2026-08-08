@@ -45,6 +45,16 @@ read-only component tree when interactive inspection is unavailable.
 | USB Android device  | Supported                          | Use `adb reverse tcp:9090 tcp:9090`                                  |
 | Physical LAN device | Supported with pairing             | Enable LAN access and use a one-time pairing code or reconnect token |
 
+## Browser edition
+
+The published `@maahibhama/pulsern` CLI requires Node.js 22.5 or newer. It serves the same debugger
+UI on a local browser endpoint and supports the same React Native SDK, inspectors, retained history,
+Hermes connection, and authenticated device-pairing flow.
+
+The browser edition stores its settings and SQLite history separately from the Electron app. Native
+desktop update controls and launch-at-login settings are intentionally unavailable. Use `.pulsern`
+session archives to move retained sessions between the browser and desktop editions.
+
 TLS is optional for LAN development and requires a user-provided certificate and private key. The
 device must trust the issuing certificate authority, and the certificate must cover the selected
 host or IP address.

@@ -9,7 +9,7 @@ description: Diagnose connection, capture, debugger, storage, and installation p
 2. Confirm `configure(...).connect()` runs in the development build.
 3. Use `127.0.0.1` for iOS Simulator or `10.0.2.2` for Android Emulator.
 4. For USB Android, run `adb reverse tcp:9090 tcp:9090`.
-5. Inspect `client.getDiagnosticSummary()` and the desktop **Connections** view.
+5. Inspect `client.getDiagnosticSummary()` and PulseRN's **Connections** view.
 
 `allowInProduction` defaults to `false`. Leave it disabled and do not test the integration with a
 production build.
@@ -61,13 +61,22 @@ interactive features are capability-gated; use the read-only tree or generated s
 - Confirm `enableStorage: true` and register the provider before connecting.
 - Some providers or values are intentionally read-only.
 - Redacted JSON and binary values cannot be edited.
-- Update and delete operations require desktop confirmation.
+- Update and delete operations require confirmation in PulseRN.
 - Undo is opaque, held by the SDK, and available only once during the same connected session.
 
 ## Port 9090 is occupied
 
-Stop the conflicting process or choose the same alternate port in both desktop Settings and SDK
-configuration. Restart the connection server after changing its setting.
+Stop the conflicting process or choose the same alternate port in PulseRN Settings and SDK
+configuration. Browser-edition users can pass `--sdk-port <number>` and must configure the SDK to
+match. Restart PulseRN after changing the port.
+
+## Browser port 3000 is occupied
+
+The CLI does not silently select another port. Stop the conflicting process or choose one explicitly:
+
+```bash
+npx @maahibhama/pulsern --port 3001
+```
 
 ## Installer or update warnings
 

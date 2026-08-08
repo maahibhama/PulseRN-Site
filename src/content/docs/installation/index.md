@@ -1,9 +1,12 @@
 ---
 title: Desktop installation
-description: Install, verify, upgrade, or remove PulseRN on macOS, Windows, and Linux.
+description: Install, verify, upgrade, or remove the packaged PulseRN desktop app on macOS, Windows, and Linux.
 ---
 
 PulseRN desktop builds are published through [GitHub Releases](https://github.com/maahibhama/PulseRN/releases). Preview releases are unsigned.
+
+Prefer not to install Electron? With Node.js 22.5 or newer, follow [Run in a
+browser](/PulseRN-Site/browser/) to launch the same debugger UI from the published CLI.
 
 ## Homebrew
 
